@@ -1,0 +1,7 @@
+{
+  "secret": "vidyapathaisalwaysrunning",
+  "GCLOUD_PROJECT": "<your-project-id>",
+  "CLOUD_BUCKET": "<your-cloud-bucket>",
+  "DATA_BACKEND": "datastore"
+  
+}

@@ -1,0 +1,7 @@
+mixin inboxmessage(obj)
+
+	.row.inmessage(id = `${obj.MessageID}`)
+		.inner.well
+			p.pull-right(id="sender") From: #{obj.Sender}
+			h3(id="subject") #{obj.MessageSubject.substring(0,50)}
+			p(id="messagetext") #{obj.MessageText.substring(0,100)}

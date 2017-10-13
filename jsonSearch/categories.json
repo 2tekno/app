@@ -1,0 +1,31 @@
+{"items": [
+  {"category" : "tv", "name" : "Sharp"},
+  {"category" : "tv", "name" : "Sony"},
+  {"category" : "tv", "name" : "Benq"},
+  {"category" : "auto", "name" : "Nissan", "color" : "black"},
+  {"category" : "auto", "name" : "Mazda", "color" : "blue"},
+  {"category" : "auto", "name" : "Toyota", "color" : "silver"},
+  {"category" : "auto", "name" : "BMW", "color" : "black"}
+]
+}
+
+
+{"items": [
+{“id” : “1”, “property” : “category”, “propertyValue” : “auto”},
+{“id” : “1”, “property” : “make”, “propertyValue” : “bmw”},
+{“id” : “1”, “property” : “model”, “propertyValue” : “525”},
+{“id” : “1”, “property” : “year”, “propertyValue” : “2010”},
+{“id” : “1”, “property” : “color”, “propertyValue” : “black”},
+
+{“id” : “10”, “property” : “category”, “propertyValue” : “auto”},
+{“id” : “10”, “property” : “make”, “propertyValue” : “Nissan”},
+{“id” : “10”, “property” : “model”, “propertyValue” : “sentra”},
+{“id” : “10”, “property” : “year”, “propertyValue” : “2002”},
+{“id” : “10”, “property” : “color”, “propertyValue” : “grey”},
+
+{“id” : “20”, “property” : “category”, “propertyValue” : “tv”},
+{“id” : “20”, “property” : “bodycolor”, “propertyValue” : “black”},
+{“id” : “20”, “property” : “screen”, “propertyValue” : “100”},
+{“id” : “20”, “property” : “manufacturer”, “propertyValue” : “sony”},
+]
+}

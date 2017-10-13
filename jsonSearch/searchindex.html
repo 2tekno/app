@@ -1,0 +1,105 @@
+<html>
+<head>
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+</head>
+<body>
+
+<input class="searchterm" type="text" /> <button id="search">search</button>
+
+
+<script type="text/javascript">
+
+var x;
+
+
+$(document).ready(function() {
+  $('.searchterm').keydown(function(e) {
+    if(e.keyCode == 32) {
+      // do whatever you want with the value
+      $(this).val($(this).val() + '');
+      x = $(this).val();
+  		console.log(x);
+  		getCategories(x);
+    }
+  });
+});
+
+var categories = {"items": [
+{"id" : "1", "property" : "category", "propertyValue" : "auto"},
+{"id" : "1", "property" : "make", "propertyValue" : "bmw"},
+{"id" : "1", "property" : "model", "propertyValue" : "525"},
+{"id" : "1", "property" : "year", "propertyValue" : "2010"},
+{"id" : "1", "property" : "color", "propertyValue" : "black"},
+
+{"id" : "10", "property" : "category", "propertyValue" : "auto"},
+{"id" : "10", "property" : "make", "propertyValue" : "Nissan"},
+{"id" : "10", "property" : "model", "propertyValue" : "sentra"},
+{"id" : "10", "property" : "year", "propertyValue" : "2002"},
+{"id" : "10", "property" : "color", "propertyValue" : "grey"},
+
+{"id" : "20", "property" : "category", "propertyValue" : "tv"},
+{"id" : "20", "property" : "bodycolor", "propertyValue" : "black"},
+{"id" : "20", "property" : "screen", "propertyValue" : "100"},
+{"id" : "20", "property" : "manufacturer", "propertyValue" : "Sony"}
+]
+};
+
+
+// var x = "black";
+
+
+function getCategories(x){
+	var arr = [];
+
+	var keywords = x.split(" ");
+	console.log("number of keywords : " + keywords.length);
+
+
+	console.log("keywords are : ");
+	for(var i=0; i<keywords.length; i++){
+		console.log(keywords[i]);
+	}
+
+	for(var i=0; i < categories.items.length; i++){
+		var obj = categories.items[i];
+		var id = obj.id;
+		var category;
+
+		//flag to avoid adding a category multiple times for same object 
+		//(if keyword is in multiple fields)
+		var keywordFound = false;
+
+		//set category that will be added to the array if keyword is found
+		if(obj.property == "category"){
+			category = obj.propertyValue;
+		}
+
+		for(var key in obj){
+			// console.log("Key : " + key);
+			if(obj.hasOwnProperty(key)){
+				for(var k=0; k<keywords.length; k++){
+					// console.log("Current keyword : " + keywords[k]);
+					// console.log("JSON property : " + keywords[k]);
+					if(obj[key] == keywords[k]){
+						// console.log("MATCH! " + obj[key] + " and " + keywords[k]);
+						if(!arr.includes(category)){
+							arr.push(category);
+						}
+						// console.log("array is : " + arr);
+					}
+				}
+			}
+		}
+}
+console.log("Array : " + arr);
+console.log("Amount of matching categories : " + arr.length);
+}
+
+
+ 
+</script>
+
+</body>
+</html>

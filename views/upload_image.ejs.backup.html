@@ -1,0 +1,137 @@
+<%- include layouts/header.ejs %>
+
+<div class="page-data">
+    
+<form id="upload_image" method="post" action="/upload" enctype="multipart/form-data">
+
+
+  <div>
+  <input type="text" id="title" name="title" value="" >
+  </div>
+  <div>
+  <input type="text" id="description" name="description" value="" >
+  </div>
+  <div>
+  <input type="text" name="price" value="" >
+  </div>
+  <div>
+  <input type="text" name="location" value="" >
+  </div>
+
+  </br>
+  </br>
+  <div>
+
+  <span class="btn btn-primary btn-file"> 
+      Add Image<input type="file" id="files" multiple name="files[]">
+  </span>
+  </div>
+  <div>
+
+  <output id="list"></output>
+  </div>
+
+</br>
+
+<div>
+  <input class="btn btn-primary" type="submit" name="submit" id="submit" value="Submit Posting">
+</div>
+
+</form>
+
+</div>      
+      
+      
+      
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+
+        localStorage.removeItem("listFiles");
+        document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+        var formData = new FormData();
+        var files = [];
+
+        function handleFileSelect(evt) {
+          files = evt.target.files; 
+
+          for (var i = 0, len = document.getElementById('files').files.length; i < len; i++) {
+              formData.append("files"+(i+1), document.getElementById('files').files[i]);
+          }
+
+
+          for (var i = 0, f; f = files[i]; i++) {
+            if (!f.type.match('image.*')) { continue; }
+            var reader = new FileReader();
+            reader.onload = (function(theFile) {
+              return function(e) {
+                saveFile2Local(theFile.name);
+                var span = document.createElement('span');
+                span.innerHTML = ['<img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                document.getElementById('list').insertBefore(span, null);
+              };
+            })(f);
+
+            reader.readAsDataURL(f);
+          }
+        }
+
+        function saveFile2Local(fileName) {
+          var item = {fileName: fileName};
+          var listFiles = [];
+
+          if (localStorage.getItem("listFiles") != null) {
+            listFiles = JSON.parse(localStorage["listFiles"]);
+          }
+
+          listFiles.push(item);
+          localStorage["listFiles"] = JSON.stringify(listFiles);
+          console.log("listFiles: " + JSON.stringify(JSON.parse(localStorage["listFiles"])));
+        }
+  
+
+        $("#upload_image").submit(function(e) {
+            e.preventDefault();
+
+
+            formData.append("title", $('#title').val());
+            formData.append("description", $('#description').val());
+
+
+            var actionurl = e.currentTarget.action;
+            $.ajax({
+                url: actionurl,
+                type: 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                  console.log('success');
+                  //window.location = data;
+                },
+                xhr: function() {
+                  var xhr = new XMLHttpRequest();
+
+                  xhr.upload.addEventListener('progress', function(evt) {
+
+                    if (evt.lengthComputable) {
+                      // calculate the percentage of upload completed
+                      var percentComplete = evt.loaded / evt.total;
+                      percentComplete = parseInt(percentComplete * 100);
+                    }
+                  }, false);
+                  return xhr;
+                }
+            });
+        });
+
+
+
+});
+
+
+</script>
+
+</div>
+
+<%- include layouts/footer.ejs %>

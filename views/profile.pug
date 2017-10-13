@@ -1,0 +1,113 @@
+include layouts/header
+include mixins/_inboxmessage
+include mixins/_outboxmessage
+include mixins/_myitem
+
+.container
+	input.form-control(type='hidden' id="idx" name='idx' value=user.UserID)  
+	
+	.row.col-sm-6.well
+		p id 
+			| #{user.UserID}
+		p Name 
+			| #{user.UserName}
+		p Email 
+			| #{user.Email}
+
+	.row.well
+		ul.nav.nav-tabs
+			li.active
+				a(data-toggle="tab" href="#inbox") Inbox
+			li
+				a(data-toggle="tab" href="#outbox") Outbox
+			li
+				a(data-toggle="tab" href="#myitems") My Items
+		.tab-content
+			.tab-pane.fade.in.active(id="inbox")
+				.col-sm-12
+					if (inbox)
+						each item in inbox
+							+inboxmessage( item )
+			.tab-pane.fade(id="outbox")
+				.col-sm-12
+					if (outbox)
+						each item in outbox
+							+outboxmessage( item )
+			.tab-pane.fade(id="myitems")
+				.col-sm-12
+					if (mylistingData)
+							each item in mylistingData
+								+myitem( item )
+				
+	.div(id="dialog-reply" title="Reply Message") 
+		.editAdFieldSet
+			.div
+				label(for='Subject') Subject
+			.div
+				input.form-control(type='text' id='subject' name='subject' placeholder='subject')
+
+		.editAdFieldSet
+			.div
+				label(for='Message') Message
+			.div
+				textarea.form-control(rows='5' id='message' name='message' placeholder='message')
+									
+
+									
+script(type='text/javascript').
+
+	$(document).ready(function() {
+	
+		var messageID,subj,messagetext;
+			
+		$("#dialog-reply").dialog({
+				autoOpen: false,
+				resizable: false,
+				height: "auto",
+				width: 600,
+				modal: true,
+				buttons: {
+					"Send": function () {
+					
+						var subject = $('input[name="subject"]').val();
+						var message = $('textarea[name="message"]').val();			
+						var postingID = $('input[name="idxpostid"]').val();
+						var userID = $('input[name="idx"]').val();
+									
+						$.ajax({
+								url: '/sendmessage',
+								type: 'post',
+								data: {postingID: 0, subject: subject, message: message, userID: userID, ParentMessageID: messageID},
+								success: function(data) { console.log('success'); }
+							});	
+						
+						$(this).dialog("close");
+					},
+					Cancel: function () {
+						$('input[name="subject"]').val('');
+						$('textarea[name="message"]').val('');
+						$(this).dialog("close");
+					}
+				}
+		});  
+			
+		$("body").on("click", ".inmessage", function() {
+			messageID = $(this).attr('id');
+			subj = $(this).find('#subject').first()[0].innerText;
+			messagetext = $(this).find('#messagetext').first()[0].innerText;
+			//console.log(subj);
+			//console.log(messagetext);							
+			$('input[name="subject"]').val('Re:' + subj);			
+			$( "#dialog-reply" ).dialog( "open" );						
+		});
+	
+		var itemID;			
+		$("body").on("click", ".myitem", function() {
+			itemID = $(this).attr('id');
+			var url = '/postings/edit/' + itemID; 			
+			window.location.href = url;
+			return false;
+		});
+	
+		
+	});

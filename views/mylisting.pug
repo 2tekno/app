@@ -1,0 +1,28 @@
+include layouts/header
+include mixins/_myitem
+
+.container
+	
+	.row.well
+		.col-sm-12
+			if (mylistingData)
+					each item in mylistingData
+						+myitem( item )
+
+
+									
+script(type='text/javascript').
+
+	$(document).ready(function() {
+	
+		var itemID;
+						
+		$("body").on("click", ".myitem", function() {
+			itemID = $(this).attr('id');	
+			var url = '/postings/edit/' + itemID; 			
+			window.location.href = url;
+			return false;
+		});
+	
+		
+	});

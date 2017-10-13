@@ -1,0 +1,86 @@
+include layouts/header
+
+input.form-control(type='hidden' id="idxpostid" name='idxpostid' value=posting.PostingID) 
+input.form-control(type='hidden' id="idxuserid" name='idxuserid' value=userID) 
+
+.container
+	.col-sm-12.col-sm-3.well
+		img.center-block.img-responsive(src="/uploads/" + `${posting.MainImage}`)
+
+	.col-sm-7.col-sm-offset-2.well
+		p.pull-right #{posting.Type}
+		h2 #{posting.Title}
+		p #{posting.PostingText}
+		p.fa.fa-dollar #{posting.Price}
+		p.pull-right #{posting.Location}
+		
+	.col-sm-12.well
+				
+			each image in images
+				img.galleryImage(src="/uploads/" + `${image.FileName}`)
+
+	.col-sm-12
+		button.btn.btn-warning.btn-lg.pull-right(type='submit' id='contactSeller') Contact Seller 
+
+
+	.div(id="divDialog") 
+		title Message to seller
+		.editAdFieldSet
+			.div
+				label(for='Subject') Subject
+			.div
+				input.form-control(type='text' id='subject' name='subject' placeholder='subject')
+
+		.editAdFieldSet
+			.div
+				label(for='Message') Message
+			.div
+				textarea.form-control(rows='5' id='message' name='message' placeholder='message')
+
+script(type='text/javascript').      
+	$(document).ready(function() {
+		var subject,message,postingID,userID;
+		userID = $('input[name="idxuserid"]').val();
+		if (userID==0)
+			$(':input[type="submit"]').prop('disabled', true);
+	
+		$("#divDialog").dialog({
+			autoOpen: false,
+			resizable: false,
+			height: "auto",
+			width: 600,
+			modal: true,
+			buttons: {
+				"Send": function () {
+				 
+					subject = $('input[name="subject"]').val();
+					message = $('textarea[name="message"]').val();			
+					postingID = $('input[name="idxpostid"]').val();
+					//userID = $('input[name="idxuserid"]').val();
+								
+					$.ajax({
+							url: '/sendmessage',
+							type: 'post',
+							data: {postingID: postingID, subject: subject, message: message, userID: userID, ParentMessageID: 0},
+							success: function(data) { console.log('success'); }
+						});							
+					$(this).dialog("close");
+				},
+				Cancel: function () {
+					$('input[name="subject"]').val('');
+					$('textarea[name="message"]').val('');
+					$(this).dialog("close");
+				}
+			}
+		});  
+		  
+		  $("body").on("click", "#contactSeller", sendMessage);
+		  
+		  function sendMessage(e) {
+		      
+			  //console.log(userID);
+			  
+			  if (userID!=0)
+				$( "#divDialog" ).dialog( "open" );				
+			}
+	});

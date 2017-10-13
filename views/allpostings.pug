@@ -1,0 +1,22 @@
+include layouts/header
+include mixins/_post
+
+.container
+	each item in data
+		+post( item )
+		
+		
+script(type='text/javascript').
+
+	$(document).ready(function() {
+		$("body").on("click", ".box", function() {
+			
+			var postingID = $(this).attr('id');			
+			var url = '/postingsByPostingID/' + postingID;  //+49
+			
+			window.location.href = url;
+			return false;
+
+		});
+
+	});

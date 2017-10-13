@@ -1,0 +1,97 @@
+<!Doctype html>
+<html>
+<head>
+  <title>asfasf</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="css/selectize.css">
+<script src="js/selectize.min.js"></script>
+
+<div id="show-data"></div>
+
+<div class="formrow">
+  <label for="tags">Search:</label>
+  <input type="text" id="tags" value="website,graphics,question">
+</div>
+
+<script type="text/javascript">
+
+var optionsList = [{"category" : "tv", "name" : "Sharp", "width" : "29", "test" : "1"},
+  {"category" : "tv", "name" : "Sony", "width" : "35", "test" : "2"},
+  {"category" : "tv", "name" : "Sony", "width" : "70", "test" : "3"},
+  {"category" : "tv", "name" : "Benq", "width" : "50", "test" : "4"},
+  {"category" : "tv", "name" : "Benq", "width" : "60", "test" : "5"},
+  {"category" : "auto", "model" : "Honda", "color" : "black", "year" : "1990", "test" : "6"},
+  {"category" : "auto", "model" : "Nissan", "color" : "black", "year" : "2012", "test" : "7"},
+  {"category" : "auto", "model" : "Mazda", "color" : "blue", "year" : "2016", "test" : "8"},
+  {"category" : "auto", "model" : "Toyota", "color" : "silver", "year" : "1994", "test" : "9"},
+  {"category" : "auto", "model" : "BMW", "color" : "black", "year" : "2000", "test" : "0"}
+];
+
+function itemPreview(item){
+  if(item.category == 'tv'){
+    return '<div>' +
+        '<span class="label">Category : ' + escape(item.category) + '</span><br/>' +
+        '<span class="label">Brand : ' + escape(item.name) + '</span><br/>' +
+        '<span class="label">Width : ' + escape(item.width) + ' inches</span><br/>' +
+    '</div>';
+  }else if(item.category == 'auto'){
+    return '<div>' +
+        '<span class="label">Category : ' + escape(item.category) + '</span><br/>' +
+        '<span class="label">Model : ' + escape(item.model) + '</span><br/>' +
+        '<span class="label">Year : ' + escape(item.year) + '</span><br/>' +
+        '<span class="label">Color :' + escape(item.color) + '</span><br/>' +
+    '</div>';
+  }
+}
+
+$('#tags').selectize({
+    persist: false,
+    maxItems: null,
+    valueField: 'test',
+    labelField: 'category',
+    searchField: ['category', 'test'],
+    options: optionsList,
+    render: {
+        item: function(item, escape) {
+            return itemPreview(item);
+        },
+        option: function(item, escape) {
+            return itemPreview(item);
+        }
+    },
+    createFilter: function(input) {
+        var match, regex;
+
+        // email@address.com
+        regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+        match = input.match(regex);
+        if (match) return !this.options.hasOwnProperty(match[0]);
+
+        // name <email@address.com>
+        regex = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
+        match = input.match(regex);
+        if (match) return !this.options.hasOwnProperty(match[2]);
+
+        return false;
+    },
+    create: function(input) {
+        if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
+            return {email: input};
+        }
+        var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
+        if (match) {
+            return {
+                email : match[2],
+                name  : $.trim(match[1])
+            };
+        }
+        alert('Invalid email address.');
+        return false;
+    }
+});
+</script>
+
+</body>
+</html>

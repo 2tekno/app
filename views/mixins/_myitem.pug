@@ -1,0 +1,10 @@
+mixin myitem(obj)
+
+	.row.myitem(id = `${obj.PostingID}` onmouseover="" style="cursor: pointer;")
+		.inner.well
+			p.pull-right #{obj.Type}
+			h3 #{obj.Title}
+			img.center-left.img-responsive(src="/uploads/" + `${obj.FileName}`)
+			p #{obj.PostingText}
+			p.fa.fa-dollar #{obj.Price}
+	

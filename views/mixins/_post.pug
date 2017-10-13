@@ -1,0 +1,10 @@
+mixin post(obj)
+
+	.col-sm-3.box(id = `${obj.PostingID}` onmouseover="" style="cursor: pointer;")
+		.inner.well
+			p.pull-right #{obj.Type}
+			h3 #{obj.Title.substring(0,50)}
+			img.center-block.img-responsive(src="/uploads/" + `${obj.FileName}`)
+			p #{obj.PostingText.substring(0,100)}
+			p.fa.fa-dollar #{obj.Price}
+	

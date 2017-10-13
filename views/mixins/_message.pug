@@ -1,0 +1,6 @@
+mixin inboxmessage(obj)
+
+	.row.inmessage(id = `${obj.MessageID}`)
+		.inner.well
+			h3 #{obj.MessageSubject.substring(0,50)}
+			p #{obj.MessageText.substring(0,100)}

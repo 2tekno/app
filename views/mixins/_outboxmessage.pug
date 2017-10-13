@@ -1,0 +1,7 @@
+mixin outboxmessage(obj)
+
+	.row.inmessage(id = `${obj.MessageID}`)
+		.inner.well
+			p.pull-right(id="sender") Sent To: #{obj.ReceiveUser}
+			h3 #{obj.MessageSubject.substring(0,50)}
+			p #{obj.MessageText.substring(0,100)}

@@ -1,0 +1,68 @@
+
+block content
+head
+	title Test
+	meta(charset='utf-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+	link(rel='stylesheet' href='/../bootstrap/css/bootstrap.min.css')
+	link(rel='stylesheet' href='/../bootstrap/css/bootstrap-theme.min.css')
+	link(rel='stylesheet' href='/../datatables/css/jquery.dataTables.css')
+	link(rel='stylesheet' href='/../datatables/css/dataTables.bootStrap.css')
+	link(rel='stylesheet' href='/../css/style.css')
+	link(rel='stylesheet' href='/../css/Site.css')
+	link(rel='stylesheet' href='/../css/sticky-footer-navbar.css')
+	
+	link(rel='stylesheet' href='/../css/animate.min.css')
+	link(rel='stylesheet' href='/../css/animate.css')
+	
+	link(rel='stylesheet' href='/../bootstrap/css/bootstrap-select.min.css')
+		
+		
+	link(rel='stylesheet' href='/../css/font-awesome-4.6.3/css/font-awesome.min.css')
+	link(rel='stylesheet' href='https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css')
+	
+	link(rel='stylesheet' href='/../css/navbar.css')
+	
+	
+body
+	script(src='http://code.jquery.com/jquery-1.11.1.min.js')
+	script(src='http://code.jquery.com/ui/1.11.1/jquery-ui.min.js')
+	script(src='/../js/all.js')
+	script(src='/../bootstrap/js/bootstrap.min.js')
+	script(src='/../datatables/js/jquery.dataTables.js')
+
+	script(src='/../bootstrap/js/bootstrap-select.min.js')
+	
+	.nav.navbar.navbar-inverse.container-fluid.navbar-fixed-top
+		.navbar-header
+			button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+				span.sr-only Toggle navigation
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+
+			.collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
+				ul.nav.navbar-nav
+					li.active: a.glyphicon.glyphicon-home(href='/')
+					li: a.glyphicon.glyphicon-list(href='/allpostings')  All Postings
+					if (!showLogin)
+						li: a.glyphicon.glyphicon-plus(href='/upload')  New Item
+					
+
+
+		.collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
+				.navbar-header.navbar-right
+					ul.nav.navbar-nav
+						if (showLogin==true)
+							li: a.glyphicon.glyphicon-log-in(href='/login')  Login					
+							li: a.glyphicon.glyphicon-user(href='/signup')  Register
+						else
+							li: a.glyphicon.glyphicon-info-sign(href='/profile')  Profile	
+							li: a.glyphicon.glyphicon-log-out(href='/logout')  Logout	
+
+
+
+													
+	.footer
+		.container
+			p.text-muted.pull-right &copy; 2Tekno Systems

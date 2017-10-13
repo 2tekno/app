@@ -1,0 +1,388 @@
+body {
+  margin:0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background:#eee;
+  width:100%;
+  height:auto;
+}
+*{
+
+    border-radius:0px;
+}
+a {
+  color: #00B7FF;
+}
+
+.img-responsive {
+    width: auto;
+    height: 100px;
+}
+
+.box {
+    padding: 0 10px 0 10px;
+}
+.box .inner {
+    background-color: #fff;
+}
+
+.red{
+	background-color: #63798d;
+	color: white;
+}
+
+#wrapper{
+
+    margin-top:30px;
+    width:90%;
+    min-height:900px;
+    margin-left:5%;
+    border:1px solid #ddd;
+    background:#fff;
+
+}
+
+.adImage {
+    display: block;
+    float: left;
+    margin: 0.2em 0.5em 0.5em 0;
+    width: 100px;
+    height: 75px;
+    overflow: hidden;
+    background-position: 50% 50%;
+    text-decoration: none;
+}
+
+
+.adRow {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ccc;
+
+}
+
+.adContent {
+    padding-left: 110px;
+}
+
+.adTitle {
+    display: block;
+    margin-bottom: 0.25em;
+}
+
+.adText {
+    display: block;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+.required {
+    background-color: #FFFFB9;
+}
+
+.editAdSection  {
+    max-width: 700px;
+}
+
+.editAdFieldSet  {
+    margin-right: 10px;
+    margin-bottom: 1.5em;
+    clear: both;
+    width: 95%;
+    max-width: 700px;
+}
+
+.editAdFieldSet textarea,input[type=text] {
+    Xwidth: 95%;
+}
+
+
+progress.show,                         /* Firefox  */ 
+progress.show[role][aria-valuenow] {    /* Polyfill */
+   /* Turns off styling - not usually needed, but good to know. */
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  /* gets rid of default border in Firefox and Opera. */
+  border: solid #cccccc 1px;
+  border-radius: 3px;
+  /* Dimensions */
+  Xwidth: 238px;
+  height: 10px;
+}
+
+/* Chrome */
+progress.show::-webkit-progress-bar {
+    background: #ffeeee;
+    display: block;  
+}
+
+progress.noshow{
+  display: none;
+}
+
+  
+.form-control {
+    padding-right: 30px;
+}
+
+.form-control + .glyphicon {
+    position: absolute;
+    right: 0;
+    padding: 8px 27px;
+}
+
+
+legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  font-weight: bold;
+}
+
+fieldset {
+  border: 2px ;
+}
+
+.rowItem {
+    width: 90%;
+	padding: 10px 10px 10px 10px;
+}
+
+
+.col {
+    float: left;
+}
+.row {
+    width: 100%;
+}
+.col.half {
+    width: 50%;
+}
+.col.third {
+    width: 33.33%;
+}
+.col.full {
+    width: 100%;
+}
+
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+.thumb {
+    height: 100px;
+    border: 1px solid #000;
+    margin: 10px 0px 10px 10px;
+	
+}
+
+.galleryImage {
+    height: 75px;
+    margin: 10px 0px 10px 10px;
+	
+}
+.mainImage {
+    Xwidth: 250px;
+    margin: 5px 0px 5px 5px;
+	
+}
+
+.btn-submit {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit input[type=submit] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+} 
+
+
+
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+} 
+
+
+.bg-primary {
+    padding: 0 2px 2px 10px;
+    margin-right: 10px;
+    background-color: #506fa3;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+td.highlight {
+    background-color: whitesmoke !important;
+}
+
+td.details-control {
+    background: url('../images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../images/details_close.png') no-repeat center center;
+}
+
+#postingsTable th
+,#myPostingsTable th
+{
+   background:#91D6ED;
+   height: 25px;
+   text-align: center;
+}
+
+#allProjectsTable .numbersOnly:before {
+  content: "$";
+}
+
+ .numbersOnly,.alnright { text-align: right; }
+
+.page-container{padding:20px;}
+.page-data{padding:10px;}
+.page-header{
+
+    padding:2px;
+    padding-left:40px;
+    background:#665847;color:#FEFFFD;
+}
+.data-btn{padding-left:8px}
+.data-btn button{
+    padding:10px 20px;background:#FF9900;border:1px solid #fff;
+    color:#FEFFFD;font-weight:bold;
+}
+
+.data-table{padding-left:10px;}
+.data-table table{border-collapse:collapse;border:1px solid #ddd;width:100%}
+.a-inside{padding:4px 10px;border:1px solid #fff;text-decoration:none;}
+.a-inside.edit{background-color:#00CC00;color:#fff;}
+.a-inside.delete{background-color:#D23641;color:#fff;}
+.a-inside.select{background-color:#006699;color:#fff;}
+/*
+input[type="text"]{
+
+    border:1px solid #ddd;
+    height:26px;
+    width:300px;
+}*/
+.cancel{
+    background-color:#D23641;color:#fff;
+    border:1px solid #d32132;color:#fff;
+    padding:8px 35px;font-weight:bold;
+
+
+}
+input[type="submit"]{
+
+    border:1px solid #6599FF;
+    color:#fff;
+    padding:8px 35px;
+    font-weight:bold;
+    
+}
+textarea{ border:1px solid #ddd;width:296px;}
+.label{font-weight:bold;}
+
+#footer{margin-left:82%;margin-top:10%}
+
+/* TOOLBAR */
+nav{
+  padding-top: 5px;
+  padding: 0 30px;
+}
+nav ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+nav ul li{
+  display: inline-block;
+}
+nav ul li:hover{
+  background-color: #333;
+}
+nav ul li a, visited{
+  color: #ccc;
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+}
+.navigation{
+  width: 100%;
+}
+.form-group{
+  padding: 0 20px;
+}
+.middle{
+  width: 57%;
+  float: left;
+  display: inline;
+  text-align: center;
+  
+
+}
+.right{
+  width: 33%;
+  float: right;
+}
+.left{
+  width: 10%;
+  float: left;
+}
+#main_list{
+  float: right;
+}
+.search_form{
+  width: 80%;
+  float: right;
+}
+.form-group{
+  width: 500px;
+}
+#form_input{
+  width: 100%;
+}
+#menu{
+
+}
+#menu li{
+  padding: 20px;
+  font-size: 20px;
+}
+#menu li a{
+  text-decoration: none;
+}

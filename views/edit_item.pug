@@ -1,0 +1,287 @@
+include layouts/header
+
+.container.page-data
+	form(method='POST' action='/edit_item' id='edit_item' enctype="multipart/form-data")
+
+		.col-sm-8.well
+			input.form-control(type='hidden' id='idx' name='idx' value=user.UserID) 
+			input.form-control(type='hidden' id='idxpost' name='idxpost' value=itemData.PostingID)
+
+			.editAdSection
+			
+				.editAdFieldSet
+					label.form-check-label(for="IsSold") Sold
+						input.form-control(type="checkbox", name="issold", checked=(itemData.IsSold===1 ? "checked" : undefined))
+  
+				.editAdFieldSet
+					select.chosen-select(style={width: '100%'} id='type' name='type' data-placeholder='')
+						each item in itemData.ListTypes
+							option(selected=itemData.Type==item) #{item}
+	
+				.editAdFieldSet
+					select.chosen-select(style={width: '100%'} id='category' name='category[]' data-placeholder='Select Category' multiple tabindex='4')
+						each item in itemData.ListCategories
+							option(selected=itemData.Category.indexOf(item) != -1) #{item}
+							
+				.editAdFieldSet
+					label(for='Title' style={width: '100%'}) Title
+						input.form-control.required(type='text' id='title' name='title' value=itemData.Title  )
+
+				.editAdFieldSet
+					label(for='Description' style={width: '100%'}) Description
+						textarea.form-control.required(rows='5' id='description' name='description')
+							| #{itemData.PostingText}						
+
+				.editAdFieldSet
+					label(for='Price') Selling Price
+						input.form-control.required(type='number' id='price' name='price' value=itemData.Price) 
+
+				.editAdFieldSet
+					select.chosen-select(id='location' name='location' data-placeholder='')
+						each item in itemData.ListLocations
+							option(selected=itemData.Location==item) #{item}
+							
+				.fieldset
+					
+					.span.btn.btn-primary.btn-file
+						| Add Image
+						input(type="file" id="files" multiple name="files")
+						progress.noshow(id="progressBar" max="100" value="0")
+						
+					.legend
+						output(id="list")
+							each image in itemData.ImageList
+								span
+									img.thumb(src="/uploads/"+`${image.FileName}` id=`${image.ImageID}`  data-file=`${image.FileName}` title="Click to remove")
+						
+			button.btn.btn-primary.pull-right(type='submit' id='submit') Submit Posting
+
+		
+		.div(id="dialog-delete-confirm" title="Remove image?")
+		.div(id="dialog-submit-confirm" title="Submit item?")
+	  
+script(type='text/javascript').
+
+	$(document).ready(function() {
+	
+	localStorage.removeItem("newImages");
+	localStorage.removeItem("deletedImages");
+	
+	var config = {
+		'.chosen-select'           : {},
+		'.chosen-select-deselect'  : {allow_single_deselect:true},
+		'.chosen-select-no-single' : {disable_search_threshold:10},
+		'.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+		'.chosen-select-width'     : {width:"95%"}
+	}
+	for (var selector in config) {
+		$("#category").chosen(config[selector]);
+	}
+	
+	
+	for (var selector in config) {
+		$("#type").chosen(config[selector]);
+	}
+
+	for (var selector in config) {
+		$("#location").chosen(config[selector]);
+	}	
+	
+			$("#files").on("change", handleFileSelect);
+			$("body").on("click", ".thumb", removeFile);
+
+			var MAX_WIDTH = 400;
+			var MAX_HEIGHT = 300;  
+			var resizedFiles = [];
+			var files = [];
+
+			function handleFileSelect(evt) {
+			  files = evt.target.files; 
+			  var filesArr = Array.prototype.slice.call(files);
+			  var total = files.length; loaded = 0;
+
+			  $('#progressBar').removeClass('noshow').addClass('show');
+
+			  filesArr.forEach(function(f) {
+
+				  if(!f.type.match("image.*")) { return; }
+				  var img = new Image();  
+				  var reader = new FileReader();
+				  var dataurl = '';
+							 
+				 reader.onload = function(e) {
+					  img.onload = function() {
+					  
+						  console.log('file size, Mb = ' + (f.size/1024)/1024);
+						  var canvas = document.createElement("canvas");
+						 
+						  var ctx = canvas.getContext("2d");
+						  ctx.drawImage(img, 0, 0);
+
+						  var width = img.width;
+						  var height = img.height;
+						  //console.log('image width x height = ' + img.width + 'x' + img.height);
+						  
+						  if (width > height) {
+							if (width > MAX_WIDTH) {
+							  height *= MAX_WIDTH / width;
+							  width = MAX_WIDTH;
+							}
+						  } else {
+							if (height > MAX_HEIGHT) {
+							  width *= MAX_HEIGHT / height;
+							  height = MAX_HEIGHT;
+							}
+						  }
+						  canvas.width = width;
+						  canvas.height = height;
+										  
+						  var ctx = canvas.getContext("2d");
+						  ctx.drawImage(img, 0, 0, width, height);
+
+						  dataurl = canvas.toDataURL();
+						  
+						  //console.log('dataurl = ' + dataurl);
+
+						  resizedFiles.push({dataurl: dataurl, fileName: f.name});
+						  console.log(f.name);
+						  
+						  var span = document.createElement('span');
+						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" title="Click to remove" />'].join('');			  
+						  document.getElementById('list').insertBefore(span, null);
+						 
+						 loaded++;
+						  addPercent(0);
+						  if (loaded == total){
+							  addPercent(0);
+							   $('#progressBar').removeClass('show').addClass('noshow');
+						  }
+					  }
+					  img.src = e.target.result;  
+									  
+				  }  
+
+				  reader.onprogress = function(data) {
+					  if (data.lengthComputable) {                                            
+						  var progress = parseInt( ((data.loaded / data.total) * 100), 10 );
+						  addPercent(progress); } 
+				  }
+				  reader.readAsDataURL(f);
+			  })
+			  
+			}
+			
+			
+			function removeFile(e) {
+					var file = $(this).data("file");
+					var imageToRemove = $(this).parent();
+					var deletedId = $(this).attr('id');
+										
+					$("#dialog-delete-confirm").dialog({
+						resizable: false,
+						height: "auto",
+						width: 400,
+						modal: true,
+						buttons: {
+							"Remove": function () {
+							 
+							  for(var i=0;i<resizedFiles.length;i++) {
+								  if(resizedFiles[i].fileName === file) {
+									  resizedFiles.splice(i,1);
+									  break;
+								  }
+							  }
+							  $(imageToRemove).remove();
+							  if (deletedId!=undefined) {
+								RemoveImages(deletedId);
+							  }
+							
+							  $(this).dialog("close");
+							},
+							Cancel: function () {
+								$(this).dialog("close");
+							}
+						}
+					});             
+			}
+			
+			function RemoveImages(imageId) {
+				var deletedImages = [];
+				var deletedId ={id: imageId};
+
+				if (localStorage.getItem("deletedImages") != null) {
+					deletedImages = JSON.parse(localStorage["deletedImages"]);
+				}
+
+				deletedImages.push(deletedId);
+				localStorage["deletedImages"] = JSON.stringify(deletedImages);
+				console.log("Deleted ids: " + JSON.stringify(JSON.parse(localStorage["deletedImages"])));
+			}
+		
+			$("#edit_item").submit(function(e) {
+				e.preventDefault();
+				var actionurl = e.currentTarget.action;
+				var formData =  $("#edit_item").serializeArray();
+
+								
+					$("#dialog-submit-confirm").dialog({
+						resizable: false,
+						height: "auto",
+						width: 400,
+						modal: true,
+						buttons: {
+							"Submit": function () {
+							
+								resizedFiles.forEach(function(entry) {
+									formData.push({name: 'images[]', value: entry.dataurl}); 
+								});
+								
+								if (localStorage.getItem("deletedImages") != null) {
+									var deletedImages = JSON.parse(localStorage["deletedImages"]);
+									formData.push({name: "deletedImages", value: JSON.stringify(deletedImages)});
+								}
+								
+								//console.log('resizedFiles.length = ' + resizedFiles.length);
+								var postingID = $('input[name="idxpost"]').val();
+								$.ajax({
+									url: actionurl+'/'+postingID,
+									type: 'post',
+									data: formData,
+									success: function(data) {
+									  resizedFiles = [];
+									  $('#submitProgressBar').removeClass('show').addClass('noshow');
+									  console.log('success');   
+									  window.location = '/mylisting'; 
+									},
+									xhr: function() {
+									  var xhr = new XMLHttpRequest();
+									  xhr.upload.addEventListener('progress', function(evt) {
+										$('#submitProgressBar').removeClass('noshow').addClass('show');
+										if (evt.lengthComputable) {
+											var percentComplete = evt.loaded / evt.total;
+											percentComplete = parseInt(percentComplete * 100);
+											 var bar = document.getElementById("submitProgressBar");
+											 //bar.value = percentComplete;
+										}
+									  }, false);
+									  return xhr;
+									}
+								});
+								
+								$(this).dialog("close");
+							},
+							Cancel: function () {
+								$(this).dialog("close");
+							}
+						}
+					});          			
+			});
+
+					
+			function addPercent(progress) {
+				var bar = document.getElementById("progressBar");
+				bar.value = progress;
+			}
+
+
+	});

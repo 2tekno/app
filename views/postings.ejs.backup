@@ -1,0 +1,39 @@
+<%- include layouts/header.ejs %>
+
+<div class="page-data">
+    
+<div class="row">
+    <div>
+      <label>Title</label>
+    </div>
+    <div>
+      <input type="text" readonly="readonly"  value='<%=posting.Title%>'>
+    </div>   
+</div>
+<div class="row">
+    <div>
+      <label>Price</label>
+    </div>
+    <div>
+      <input type="text" readonly="readonly"  value='<%=posting.Price%>'>
+    </div>   
+</div>
+
+
+   <%images.forEach(function(prop) { %>
+		 
+
+	<div class="row">
+		<div>
+		  <label>Image</label>
+		</div>
+		<div>
+		  <input type="text" readonly="readonly"  value='<%=prop.FileName%>'>
+		</div> 
+	</div>
+		
+		
+	<% }); %>
+                
+        
+<%- include layouts/footer.ejs %>
