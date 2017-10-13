@@ -2,7 +2,6 @@
 
 
 var connection = {
-	'Xhost': 'mrpmanager.com',
 	'host': '127.0.0.1',
 	'user': 'root',
 	'password': 'E#355840',
