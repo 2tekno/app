@@ -153,7 +153,7 @@ module.exports = function(passport) {
 		  clientID: config.facebook.clientID,
 		  clientSecret: config.facebook.clientSecret,
 		  callbackURL: config.facebook.callbackURL,
-		  profileFields: ['id', 'emails', 'name']
+		  profileFields: ['emails']
 		},
 		function(accessToken, refreshToken, profile, done) {
 			    //extractProfile(profile);
