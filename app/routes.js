@@ -213,8 +213,7 @@ module.exports = function(app, passport) {
 	// process with Google ....
 
    	app.get('/auth/google', function(req, res, next) {
-		passport.authenticate('google', {scope: ['profile', 'email']})(req, res, next);
-		
+		passport.authenticate('google', {scope: ['profile', 'email']})(req, res, next);		
 	});
 
 	
@@ -228,10 +227,11 @@ module.exports = function(app, passport) {
 
 	
 	// process with Facebook ....
-	app.get('/auth/facebook',
-	  passport.authenticate('facebook'),
-			function(req, res){});
-	
+
+	app.get('/auth/facebook', 
+	  passport.authenticate('facebook', { scope : 'email' }
+	));
+				
 	app.get('/auth/facebook/callback',
 	  passport.authenticate('facebook', { successRedirect : '/profile', failureRedirect: '/' }),
 			  function(req, res) {
