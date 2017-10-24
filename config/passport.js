@@ -1,6 +1,5 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var GoogleStrategy  = require('passport-google-oauth20').Strategy;
-
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var mysql = require('mysql');
@@ -158,11 +157,11 @@ module.exports = function(passport) {
 		  clientID: config.facebook.clientID,
 		  clientSecret: config.facebook.clientSecret,
 		  callbackURL: config.facebook.callbackURL,
-		  profileFields: ['id', 'emails', 'name']
-
+		  //profileFields: ['id', 'emails', 'name']
+passReqToCallback: true
 		},
 		function(accessToken, refreshToken, profile, done) {
-			//console.log('req ' + req);
+			console.log('req ' + req);
 			   var ip ='';
 				/*var ip = req.headers['x-forwarded-for'] || 
 							 req.connection.remoteAddress || 
