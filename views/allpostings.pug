@@ -2,8 +2,9 @@ include layouts/header
 include mixins/_post
 
 .container
-	each item in data
-		+post( item )
+	if (data)
+		each item in data
+			+post( item )
 		
 		
 script(type='text/javascript').
