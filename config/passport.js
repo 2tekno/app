@@ -160,7 +160,7 @@ module.exports = function(passport) {
 		  //profileFields: ['id', 'emails', 'name']
 passReqToCallback: true
 		},
-		function(accessToken, refreshToken, profile, done) {
+		function(req,accessToken, refreshToken, profile, done) {
 			console.log('req ' + req);
 			   var ip ='';
 				/*var ip = req.headers['x-forwarded-for'] || 
