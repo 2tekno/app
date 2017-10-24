@@ -228,8 +228,8 @@ module.exports = function(app, passport) {
 	
 	// process with Facebook ....
 
-	//app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-	app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['profile', 'email']}));			
+	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+	//app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['profile', 'email']}));			
 
 	
 	
