@@ -159,13 +159,16 @@ module.exports = function(passport) {
 		  clientSecret: config.facebook.clientSecret,
 		  callbackURL: config.facebook.callbackURL,
 		  profileFields: ['id', 'emails', 'name']
+
 		},
-		function(req, accessToken, refreshToken, profile, done) {
-				var ip = req.headers['x-forwarded-for'] || 
+		function(accessToken, refreshToken, profile, done) {
+			//console.log('req ' + req);
+			   var ip ='';
+				/*var ip = req.headers['x-forwarded-for'] || 
 							 req.connection.remoteAddress || 
 							 req.socket.remoteAddress ||
 							 req.connection.socket.remoteAddress;
-				
+				*/
 				users.getUserByEmail(profile.emails[0].value, function(err, rows) {
 					if(err) {return done(err);}
 					if (rows.length) {
