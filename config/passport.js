@@ -120,7 +120,12 @@ module.exports = function(passport) {
 				  passReqToCallback: true
 			},
 		  function(req, accessToken, refreshToken, profile, done) {
-				//extractProfile(profile);
+				
+				var ip = req.headers['x-forwarded-for'] || 
+							 req.connection.remoteAddress || 
+							 req.socket.remoteAddress ||
+							 req.connection.socket.remoteAddress;
+				
 				
 				users.getUserByEmail(profile.emails[0].value, function(err, rows) {
 					if(err) {return done(err);}
@@ -138,7 +143,7 @@ module.exports = function(passport) {
 						return done(null, user);
 												
 					} else {
-						users.createGoogleUser(profile.emails[0].value, profile.emails[0].value, function(err, user) {
+						users.createUser(ip, profile.emails[0].value, profile.emails[0].value, function(err, user) {
 							return done(null, user);
 						});
 					}
@@ -155,9 +160,11 @@ module.exports = function(passport) {
 		  callbackURL: config.facebook.callbackURL,
 		  profileFields: ['id', 'emails', 'name']
 		},
-		function(accessToken, refreshToken, profile, done) {
-			    //extractProfile(profile);
-				//console.log('profile = ' + profile);
+		function(req, accessToken, refreshToken, profile, done) {
+				var ip = req.headers['x-forwarded-for'] || 
+							 req.connection.remoteAddress || 
+							 req.socket.remoteAddress ||
+							 req.connection.socket.remoteAddress;
 				
 				users.getUserByEmail(profile.emails[0].value, function(err, rows) {
 					if(err) {return done(err);}
@@ -172,7 +179,7 @@ module.exports = function(passport) {
 												
 						return done(null, user);
 					} else {
-						users.createGoogleUser(profile.emails[0].value, profile.emails[0].value, function(err, user) {
+						users.createUser(ip, profile.emails[0].value, profile.emails[0].value, function(err, user) {
 							return done(null, user);
 						});
 					}

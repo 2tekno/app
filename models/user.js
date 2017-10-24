@@ -42,10 +42,11 @@ exports.create = function(UserName, Email, Password, done) {
 	 })
 }
 
-exports.createGoogleUser = function(UserName, Email, done) {
+exports.createUser = function(ip, UserName, Email, done) {
        var user = {
 			UserName 	: UserName,
-			Email 		: Email
+			Email 		: Email,
+			IpAddress	: ip
 		};
 		var insertQuery = "INSERT INTO users set ? ";
 		connection.query(insertQuery, [user], function(err, result) {
