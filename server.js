@@ -39,13 +39,17 @@ var config = require('./config/config.json');
 var sessionConfig = {
   //cookieName: 'myapp',
   //resave: true,
-  //saveUninitialized: true,
-  saveUninitialized: false,
-  resave: false,
+  saveUninitialized: true,
+  //saveUninitialized: false,
+  //resave: false,
+  resave: true,
   secret: config.secret,
   http: true,
+  proxy: true,
   cookie: {expires:1 * 24 * 3600 * 1000, httpOnly: true  }
 };
+app.enable('trust proxy');
+
 app.use(session(sessionConfig));
 
 
