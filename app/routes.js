@@ -248,7 +248,8 @@ module.exports = function(app, passport) {
 function isLoggedIn(req, res, next) {
 
 	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated()) {return next();}
+	//if (req.isAuthenticated()) {return next();}
+	if (req.user) {return next();}
     else { 
         req.session.returnTo = req.path; 
         res.redirect('/login'); 
