@@ -46,19 +46,8 @@ exports.allpostings = function(req, res){
 	 
 	  connection.query(queryStr, function(err, data) {
 		if(err) console.log("Error Selecting : %s ", err);
-		res.render('allpostings', {page_title: "All Postings", data: data, showLogin: showLogin });
+		res.render('allpostings', {page_title: "All Postings", data: data, showLogin: showLogin, user: req.user });
 	 });
-};
-
-exports.allpostingsOLD = function(req, res){	 	 
-	var userID = req.user.UserID || 0;
-	var showLogin = true;
-	if (req.isAuthenticated()) {
-		showLogin = false;
-	}
-	
-   console.log('userId = ' + req.user.UserID);
-   res.render('allpostings', {page_title: "All Postings", userID: userID, showLogin: showLogin });
 };
 
 exports.alllistData = function(req, res){
