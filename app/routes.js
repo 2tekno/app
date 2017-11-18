@@ -80,7 +80,7 @@ module.exports = function(app, passport) {
 			showLogin = false;
 		}
 
-	 	res.render('homepage',{page_title: "Home Page", showLogin: showLogin}); 
+	 	res.render('homepage',{page_title: "Home Page", showLogin: showLogin, user : req.user}); 
 	 });
 	
 	app.get('/search', postings.search);
@@ -158,7 +158,7 @@ module.exports = function(app, passport) {
 			showLogin = false;
 		}
 		// render the page and pass in any flash data if it exists
-		res.render('login', { message: req.flash('loginMessage'), showLogin: showLogin });
+		res.render('login', { message: req.flash('loginMessage'), showLogin: showLogin, user : req.user });
 	});
     
    /*    app.post('/login', passport.authenticate('local-login', {
