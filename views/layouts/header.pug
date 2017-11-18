@@ -49,7 +49,7 @@ body
 				ul.nav.navbar-nav
 					li: a.glyphicon.glyphicon-home(href='/')
 					li: a.glyphicon.glyphicon-tags(href='/allpostings')  All Items
-					if (!showLogin)
+					if (user)
 						li: a.glyphicon.glyphicon-plus(href='/upload')  New Item
 						li: a.glyphicon.glyphicon-list(href='/mylisting')  My Items
 
@@ -57,14 +57,12 @@ body
 		.collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
 				.navbar-header.navbar-right
 					ul.nav.navbar-nav
-						if (showLogin==true)
-							li: a.glyphicon.glyphicon-log-in(href='/login')  Login					
-						else
+						if (user)
 							li: a.glyphicon.glyphicon-info-sign(href='/profile')  My Account	
 							li: a.glyphicon.glyphicon-log-out(href='/logout')  Logout	
-
-
-
+						else
+							li: a.glyphicon.glyphicon-log-in(href='/login')  Login					
+						
 													
 	.footer
 		.container
