@@ -46,7 +46,7 @@ exports.allpostings = function(req, res){
 	 
 	  connection.query(queryStr, function(err, data) {
 		if(err) console.log("Error Selecting : %s ", err);
-		res.render('allpostings', {page_title: "All Postings", data: data, showLogin: showLogin, user: req.user });
+		res.render('allpostings', {page_title: "All Postings", data: data, user: req.user });
 	 });
 };
 
@@ -89,15 +89,11 @@ exports.postingDataWithImage = function(req, res){
 exports.mylistPage = function(req, res){
    var userID = req.user.UserID || 0;
    
-	var showLogin = true;
-	if (req.isAuthenticated()) {
-		showLogin = false;
-	}
 		
 	 connection.query("SELECT * FROM posting where UserID = ?  ORDER BY PostingID DESC", userID, function(err, data) {
 	  if(err) console.log("Error Selecting : %s ", err);
 
-    	res.render('myitems', {page_title: "My Postings", userID: userID, showLogin: showLogin, data: data });
+    	res.render('myitems', {page_title: "My Postings", userID: userID, user: req.user, data: data });
 		  
 		  
      });
@@ -123,12 +119,9 @@ exports.postingsByCategory = function(req, res){
 };
 
 exports.postingsByPostingID = function(req, res){
-	var showLogin = true;
+
 	var userID = 0;
-	if (req.isAuthenticated()) {
-		showLogin = false;
-		userID = req.user.UserID;
-	}
+
 	//var userID = req.user.UserID || 0;
     var PostingID = req.params.id || 0;
      connection.query('SELECT * FROM posting WHERE PostingID = ?', PostingID, function(err, posting) {
@@ -149,19 +142,15 @@ exports.postingsByPostingID = function(req, res){
 
           };
 		  
-			//res.send(postingData);
-			res.render('posting', { page_title: "Posting", showLogin: showLogin, userID:userID, posting: dataPosting, images: images} );
+			res.render('posting', { page_title: "Posting", user: req.user, userID:userID, posting: dataPosting, images: images} );
 			  
 		 });
       });
 };
 
 exports.search = function (req, res) {
-	var showLogin = true;
-	if (req.isAuthenticated()) {
-		showLogin = false;
-	}
-    res.render('search', { page_title: "search", showLogin: showLogin} );
+
+    res.render('search', { page_title: "search", user: req.user} );
 
 }
 
