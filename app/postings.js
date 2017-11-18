@@ -122,7 +122,7 @@ exports.postingsByPostingID = function(req, res){
 
 	var userID = 0;
 
-	//var userID = req.user.UserID || 0;
+	var userID = req.user.UserID || 0;
     var PostingID = req.params.id || 0;
      connection.query('SELECT * FROM posting WHERE PostingID = ?', PostingID, function(err, posting) {
          if(err) console.log("Error Selecting : %s ", err);
