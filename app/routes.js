@@ -12,7 +12,7 @@ var connection = mysql.createConnection(dbconfig.connection);
 var messages = require('./messages');
 var users = require('../models/user');
 
-var showLogin = true;
+//var showLogin = true;
 
 
 
@@ -24,12 +24,10 @@ module.exports = function(app, passport) {
 	app.post('/edit_item/:id', postings.edit_item);	
     app.post('/upload', postings.upload);	
     app.get('/upload', isLoggedIn, function(req, res){		
-		if (req.isAuthenticated()) {
-			showLogin = false;
-		}
+
         var userID = req.user.UserID || 0;
         res.render('new_post', {userID: userID, 
-								showLogin: showLogin, 
+								//showLogin: showLogin, 
 								ListLocations: dbconfig.ListLocations, 
 								ListTypes: dbconfig.ListTypes,
 								ListCategories: dbconfig.ListCategories								
@@ -39,12 +37,10 @@ module.exports = function(app, passport) {
 	
 	//app.post('/postings/edit/:id',postings.save_edit);
 	app.get('/postings/edit/:id', postings.itemDataByPostingID, isLoggedIn, function(req, res) {
-		if (req.isAuthenticated()) {
-			showLogin = false;
-		}
+
 		res.render('edit_item', {
 			itemData: req.itemData,
-			showLogin: showLogin,
+			//showLogin: showLogin,
 			user : req.user
 		});
 	});
@@ -52,12 +48,10 @@ module.exports = function(app, passport) {
 	
 	
 	app.get('/mylisting', isLoggedIn,  postings.mylistingData, function(req, res) {
-		if (req.isAuthenticated()) {
-			showLogin = false;
-		}
+
 		res.render('mylisting', {
 			mylistingData: req.mylistingData,
-			showLogin: showLogin,
+			//showLogin: showLogin,
 			user : req.user
 		});
 	});
@@ -76,11 +70,8 @@ module.exports = function(app, passport) {
 	app.post('/sendmessage', messages.new_message);
 
 	 app.get('/', function(req, res) {		
-		if (req.isAuthenticated()) {
-			showLogin = false;
-		}
 
-	 	res.render('homepage',{page_title: "Home Page", showLogin: showLogin, user : req.user}); 
+	 	res.render('homepage',{page_title: "Home Page", user : req.user}); 
 	 });
 	
 	app.get('/search', postings.search);
@@ -136,16 +127,14 @@ module.exports = function(app, passport) {
 	// =====================================
 
 	app.get('/profile', isLoggedIn, messages.myInBoxMessages, messages.myOutBoxMessages, postings.mylistingData,  function(req, res) {
-		if (req.isAuthenticated()) {
-			showLogin = false;
-		}
+		//if (req.isAuthenticated()) {showLogin = false;}
 		//console.log('req.user **** ' + JSON.stringify(req.user));
 		
 		res.render('profile', {
 			inbox: req.inbox,
 			outbox: req.outbox,
 			mylistingData: req.mylistingData,
-			showLogin: showLogin,
+			//showLogin: showLogin,
 			user : req.user  // get the user out of session and pass to template
 
 		});
@@ -154,11 +143,9 @@ module.exports = function(app, passport) {
  // LOGIN ===============================
     // show the login form
     app.get('/login', function(req, res) {
-		if (req.isAuthenticated()) {
-			showLogin = false;
-		}
+		//if (req.isAuthenticated()) {showLogin = false;}
 		// render the page and pass in any flash data if it exists
-		res.render('login', { message: req.flash('loginMessage'), showLogin: showLogin, user : req.user });
+		res.render('login', { message: req.flash('loginMessage'), user : req.user });
 	});
     
    /*    app.post('/login', passport.authenticate('local-login', {
@@ -182,10 +169,10 @@ module.exports = function(app, passport) {
 	
 	app.get('/logout', function (req, res){
 		
-		showLogin = true;
+		//showLogin = true;
 		req.logout();
 		res.clearCookie('connect.sid');
-		res.render('layouts/header', {showLogin: showLogin});
+		res.render('layouts/header', {user: req.user});
 				
 	});
 
@@ -194,11 +181,8 @@ module.exports = function(app, passport) {
 	// SIGNUP ==============================
 	// show the signup form
 	app.get('/signup', function(req, res) {
-		if (req.isAuthenticated()) {
-			showLogin = false;
-		}
 		// render the page and pass in any flash data if it exists
-		res.render('signup', { message: req.flash('signupMessage'), showLogin: showLogin });
+		res.render('signup', { message: req.flash('signupMessage') });
 	});
 
 	// process the signup form
