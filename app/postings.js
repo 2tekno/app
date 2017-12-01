@@ -33,7 +33,7 @@ exports.mylistingData = function(req, res, next){
 exports.allpostings = function(req, res){
 	var userID = 0;
 	var queryStr;
-	queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 GROUP BY A.PostingID ORDER BY A.Created DESC';
+	queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 WHERE A.IsSold=0 GROUP BY A.PostingID ORDER BY A.Created DESC';
 
 	if (req.user!=undefined) {userID = req.user.UserID;}
 	var showLogin = true;
