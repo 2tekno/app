@@ -39,7 +39,7 @@ exports.allpostings = function(req, res){
 	var showLogin = true;
 	if (req.isAuthenticated()) {
 		showLogin = false;
-		queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 WHERE A.UserID !='+userID+' GROUP BY A.PostingID ORDER BY A.Created DESC';
+		queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 WHERE A.IsSold=0 AND A.UserID !='+userID+' GROUP BY A.PostingID ORDER BY A.Created DESC';
 	}
 	
 	console.log('userId = ' + userID);
