@@ -481,6 +481,9 @@ exports.edit_item = function(req, res){
 	if (input.deletedImages != null) { deletedImages = JSON.parse(input.deletedImages);  }
     console.log("deletedImages:  " + JSON.stringify(deletedImages));
 
+	var rotatedImages = [];
+	if (input.rotatedImages != null) { rotatedImages = JSON.parse(input.rotatedImages);  }
+		
 	//--------------------------------- 
 	var mandatoryFields = {
 	  Title : Title,
@@ -500,6 +503,19 @@ exports.edit_item = function(req, res){
 					var id = deletedImages[obj]['id'];
 					connection.query("UPDATE postingimage SET IsDeleted = 1 WHERE ImageID='"+id+"'", function(err, rowsImages) {
 						 if (err) logger.error("Error deleting from postingimage table: %s ", err);
+					})
+			  }
+			}
+		}
+
+		if (rotatedImages != null) {
+			for(var obj in rotatedImages) {
+			  if(rotatedImages[obj].hasOwnProperty('imageId')) {
+					var id = rotatedImages[obj]['imageId'];
+					var angle = rotatedImages[obj]['Angle'];
+					
+					connection.query("UPDATE postingimage SET Angle=" + angle + " WHERE ImageID='"+id+"'", function(err, rowsImages) {
+						 if (err) logger.error("Error update the rotatedImages : %s ", err);
 					})
 			  }
 			}

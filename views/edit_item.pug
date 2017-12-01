@@ -67,6 +67,7 @@ script(type='text/javascript').
 	
 			localStorage.removeItem("newImages");
 			localStorage.removeItem("deletedImages");
+			localStorage.removeItem("rotatedImages");
 			
 			var config = {
 				'.chosen-select'           : {},
@@ -96,18 +97,17 @@ script(type='text/javascript').
 			var MAX_HEIGHT = 300;  
 			var resizedFiles = [];
 			var files = [];
-
+			var rotatedImages = [];
 			
 			function rotateFile(e) {
-					//var imageId = $(this).attr('id');
-					
 					var imageId = $(this).parent().find("img.thumb").attr('id');
 					var image = $(this).parent().find("img.thumb");
-					var angle = $(image).data('rotate');
-					
+					var angle = $(image).data('rotate');					
 					//var angle = $(this).data('rotate');					
 					//alert(angle);
+					
 					var new_angle_value = angle + 90;
+					if (new_angle_value==360) new_angle_value=0;
 					var new_angle = 'rotate(' + new_angle_value + 'deg)';
 					$(image).css({ 
 						'-webkit-transform': new_angle,
@@ -117,6 +117,25 @@ script(type='text/javascript').
 						'transform': new_angle 
 					});
 					$(image).data('rotate',new_angle_value); 
+					
+					if (localStorage.getItem("rotatedImages") == null) {
+						rotatedImages.push({imageId: imageId, Angle: new_angle_value});								
+						localStorage["rotatedImages"] = JSON.stringify(rotatedImages);						
+					} else {
+						rotatedImages = JSON.parse(localStorage["rotatedImages"]);
+						var found = 0;
+						for(var item in rotatedImages) {
+							if (rotatedImages[item]['imageId'] == imageId) {
+								rotatedImages[item]['Angle'] = new_angle_value;
+								found = 1;
+								break;
+							}
+						}
+						if (found==0) rotatedImages.push({imageId: imageId, Angle: new_angle_value});	
+					}
+														
+					localStorage["rotatedImages"] = JSON.stringify(rotatedImages);
+					//console.log('rotatedImages: '+ JSON.stringify(rotatedImages));				
 			}
 			
 			
@@ -279,6 +298,11 @@ script(type='text/javascript').
 								if (localStorage.getItem("deletedImages") != null) {
 									var deletedImages = JSON.parse(localStorage["deletedImages"]);
 									formData.push({name: "deletedImages", value: JSON.stringify(deletedImages)});
+								}
+
+								if (localStorage.getItem("rotatedImages") != null) {
+									var rotatedImages = JSON.parse(localStorage["rotatedImages"]);
+									formData.push({name: "rotatedImages", value: JSON.stringify(rotatedImages)});
 								}
 								
 								//console.log('resizedFiles.length = ' + resizedFiles.length);
