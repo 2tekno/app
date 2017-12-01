@@ -51,9 +51,10 @@ include layouts/header
 					.legend
 						output(id="list")
 							each image in itemData.ImageList
-								span
-									img.thumb(src="/uploads/"+`${image.FileName}` id=`${image.ImageID}`  data-file=`${image.FileName}` title="Click to remove")
-						
+								span(id=`${image.ImageID}`)
+									img.thumb(src="/uploads/"+`${image.FileName}` id=`${image.ImageID}` data-rotate=`${image.Angle}` data-file=`${image.FileName}` title="Click to remove")
+									button.rotate(type='button' id=`${image.ImageID}`) Rotate
+									
 			button.btn.btn-primary.pull-right(type='submit' id='submit') Submit Posting
 
 		
@@ -64,37 +65,76 @@ script(type='text/javascript').
 
 	$(document).ready(function() {
 	
-	localStorage.removeItem("newImages");
-	localStorage.removeItem("deletedImages");
-	
-	var config = {
-		'.chosen-select'           : {},
-		'.chosen-select-deselect'  : {allow_single_deselect:true},
-		'.chosen-select-no-single' : {disable_search_threshold:10},
-		'.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-		'.chosen-select-width'     : {width:"95%"}
-	}
-	for (var selector in config) {
-		$("#category").chosen(config[selector]);
-	}
-	
-	
-	for (var selector in config) {
-		$("#type").chosen(config[selector]);
-	}
+			localStorage.removeItem("newImages");
+			localStorage.removeItem("deletedImages");
+			
+			var config = {
+				'.chosen-select'           : {},
+				'.chosen-select-deselect'  : {allow_single_deselect:true},
+				'.chosen-select-no-single' : {disable_search_threshold:10},
+				'.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+				'.chosen-select-width'     : {width:"95%"}
+			}
+			for (var selector in config) {
+				$("#category").chosen(config[selector]);
+			}
+			
+			
+			for (var selector in config) {
+				$("#type").chosen(config[selector]);
+			}
 
-	for (var selector in config) {
-		$("#location").chosen(config[selector]);
-	}	
+			for (var selector in config) {
+				$("#location").chosen(config[selector]);
+			}	
 	
 			$("#files").on("change", handleFileSelect);
 			$("body").on("click", ".thumb", removeFile);
+			$("body").on("click", ".rotate", rotateFile);
 
 			var MAX_WIDTH = 400;
 			var MAX_HEIGHT = 300;  
 			var resizedFiles = [];
 			var files = [];
 
+			
+			function rotateFile(e) {
+					//var imageId = $(this).attr('id');
+					
+					var imageId = $(this).parent().find("img.thumb").attr('id');
+					var image = $(this).parent().find("img.thumb");
+					var angle = $(image).data('rotate');
+					
+					//var angle = $(this).data('rotate');					
+					//alert(angle);
+					var new_angle_value = angle + 90;
+					var new_angle = 'rotate(' + new_angle_value + 'deg)';
+					$(image).css({ 
+						'-webkit-transform': new_angle,
+						'-moz-transform': new_angle,
+						'-o-transform': new_angle,
+						'-ms-transform': new_angle,
+						'transform': new_angle 
+					});
+					$(image).data('rotate',new_angle_value); 
+			}
+			
+			
+			$('img.thumb').each(function() {
+				var deg = $(this).data('rotate') || 0;
+				var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
+				$(this).css({ 
+					'-webkit-transform': rotate,
+					'-moz-transform': rotate,
+					'-o-transform': rotate,
+					'-ms-transform': rotate,
+					'transform': rotate 
+				});
+			});
+			
+			
+			
+			
 			function handleFileSelect(evt) {
 			  files = evt.target.files; 
 			  var filesArr = Array.prototype.slice.call(files);

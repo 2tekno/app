@@ -519,13 +519,14 @@ exports.itemDataByPostingID = function(req, res, next){
      connection.query('SELECT *,if(Category is null,"",Category) AS Cat FROM posting WHERE PostingID = ?', PostingID, function(err, posting) {
          if(err) console.log("Error Selecting : %s ", err);
 		
-		 connection.query('SELECT ImageID,FileName FROM postingimage WHERE IsDeleted = 0 AND PostingID = ?', PostingID, function(err, images) {
+		 connection.query('SELECT ImageID,FileName,if(Angle is null,0,Angle) AS Angle FROM postingimage WHERE IsDeleted = 0 AND PostingID = ?', PostingID, function(err, images) {
        
 			 var mainImg = '';
 			 var imageList = [];
-			 var Image = function(ImageID, FileName) {
+			 var Image = function(ImageID, FileName, Angle) {
 				this.ImageID = ImageID,
-				this.FileName = FileName
+				this.FileName = FileName,
+				this.Angle = Angle
 				};
 
 			 if (images[0])
@@ -533,7 +534,7 @@ exports.itemDataByPostingID = function(req, res, next){
 				mainImg = images[0].FileName;	 
 				
 				for(var i = 0 , len = images.length ; i < len ; i++){
-					imageList.push(new Image(images[i].ImageID,images[i].FileName));
+					imageList.push(new Image(images[i].ImageID,images[i].FileName, images[i].Angle));
 				}
 			 }
 			 
