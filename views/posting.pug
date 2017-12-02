@@ -5,7 +5,7 @@ input.form-control(type='hidden' id="idxuserid" name='idxuserid' value=userID)
 
 .container
 	.col-sm-12.col-sm-3.well
-		img.center-block.img-responsive(src="/uploads/" + `${posting.MainImage}`)
+		img.center-block.img-responsive(src="/uploads/" + `${posting.MainImage}` data-rotate=`${posting.Angle}`)
 
 	.col-sm-7.col-sm-offset-2.well
 		p.pull-right #{posting.Type}
@@ -17,7 +17,7 @@ input.form-control(type='hidden' id="idxuserid" name='idxuserid' value=userID)
 	.col-sm-12.well
 				
 			each image in images
-				img.galleryImage(src="/uploads/" + `${image.FileName}`)
+				img.galleryImage(src="/uploads/" + `${image.FileName}` data-rotate=`${image.Angle}`)
 
 	.col-sm-12
 		button.btn.btn-warning.btn-lg.pull-right(type='submit' id='contactSeller') Contact Seller 
@@ -43,6 +43,30 @@ script(type='text/javascript').
 		userID = $('input[name="idxuserid"]').val();
 		if (userID==0)
 			$(':input[type="submit"]').prop('disabled', true);
+	
+		$('img.center-block').each(function() {
+			var deg = $(this).data('rotate') || 0;
+			var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
+			$(this).css({ 
+				'-webkit-transform': rotate,
+				'-moz-transform': rotate,
+				'-o-transform': rotate,
+				'-ms-transform': rotate,
+				'transform': rotate 
+			});
+		});
+		
+		$('img.galleryImage').each(function() {
+			var deg = $(this).data('rotate') || 0;
+			var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
+			$(this).css({ 
+				'-webkit-transform': rotate,
+				'-moz-transform': rotate,
+				'-o-transform': rotate,
+				'-ms-transform': rotate,
+				'transform': rotate 
+			});
+		});
 	
 		$("#divDialog").dialog({
 			autoOpen: false,

@@ -4,7 +4,7 @@ mixin myitem(obj)
 		.inner.well
 			p.pull-right #{obj.Type}
 			h3 #{obj.Title}
-			img.center-left.img-responsive(src="/uploads/" + `${obj.FileName}`)
+			img.center-left.img-responsive(src="/uploads/" + `${obj.FileName}`  data-rotate=`${obj.Angle}`)
 			p #{obj.PostingText}
 			p.fa.fa-dollar #{obj.Price}
 	
