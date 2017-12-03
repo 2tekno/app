@@ -53,7 +53,7 @@ include layouts/header
 							each image in itemData.ImageList
 								span(id=`${image.ImageID}`)
 									img.thumb(src="/uploads/"+`${image.FileName}` id=`${image.ImageID}` data-rotate=`${image.Angle}` data-file=`${image.FileName}` title="Click to remove")
-									button.rotate(type='button' id=`${image.ImageID}`) Rotate
+									button.glyphicon.glyphicon-repeat.rotate(type='button' id=`${image.ImageID}`) 
 									
 			button.btn.btn-primary.pull-right(type='submit' id='submit') Submit Posting
 

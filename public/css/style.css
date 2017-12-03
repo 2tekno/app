@@ -16,6 +16,8 @@ a {
 .img-responsive {
     width: auto;
     height: 100px;
+	margin-top:10%;
+	margin-bottom:10%;
 }
 
 .box {
@@ -176,7 +178,9 @@ fieldset {
 .thumb {
     height: 100px;
     border: 1px solid #000;
-    margin: 10px 0px 10px 10px;
+	margin: 10px 0px 10px 10px;
+    Xmargin: 25px 25px 25px 10px;
+	position: relative;
 	
 }
 
