@@ -16,8 +16,38 @@ a {
 .img-responsive {
     width: auto;
     height: 100px;
-	margin-top:10%;
+	margin-top:5%;
 	margin-bottom:10%;
+}
+
+.img-responsive2 {
+    width: auto;
+	min-height: 80%;
+	margin-top:5%;
+	margin-bottom:10%;
+}
+
+p.pull-right {
+	 height: 2%;
+}
+
+h3.post-header {
+	 min-height: 10%;
+}
+.img.center-block.img-responsive {
+	min-height: 80%;
+}
+img.center-left.img-responsive {
+
+    min-height: 80%;
+}
+
+p.post-text {
+	 min-height: 5%;
+}
+
+p.fa.fa-dollar {
+	min-height: 3%;
 }
 
 .box {

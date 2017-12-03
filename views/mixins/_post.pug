@@ -3,8 +3,8 @@ mixin post(obj)
 	.col-sm-3.box(id = `${obj.PostingID}` onmouseover="" style="cursor: pointer;")
 		.inner.well
 			p.pull-right #{obj.Type}
-			h3 #{obj.Title.substring(0,50)}
+			h3.post-header #{obj.Title.substring(0,50)}
 			img.center-block.img-responsive(src="/uploads/" + `${obj.FileName}`  data-rotate=`${obj.Angle}`)
-			p #{obj.PostingText.substring(0,100)}
+			p.post-text #{obj.PostingText.substring(0,100)}
 			p.fa.fa-dollar #{obj.Price}
 	
