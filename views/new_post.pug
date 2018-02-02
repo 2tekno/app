@@ -58,8 +58,8 @@ script(type='text/javascript').
 	$(document).ready(function() {
 			$("#files").on("change", handleFileSelect);
 			$("body").on("click", ".thumb", removeFile);
+			$("body").on("click", "#rotator", rotateImage);
 
-			
 			var config = {
 				'.chosen-select'           : {},
 				'.chosen-select-deselect'  : {allow_single_deselect:true},
@@ -85,6 +85,28 @@ script(type='text/javascript').
 			var MAX_HEIGHT = 300;  
 			var resizedFiles = [];
 			var files = [];
+
+			function rotateImage() {
+				var imageId = $(this).parent().find("img.thumb").attr('data-file');
+				console.log('rotatedImages: ' + imageId);	
+
+				var image = $(this).parent().find("img.thumb");
+				var angle = $(image).data('rotate');					
+				//alert(angle);
+				
+				var new_angle_value = angle + 90;
+				if (new_angle_value==360) new_angle_value=0;
+				var new_angle = 'rotate(' + new_angle_value + 'deg)';
+				$(image).css({ 
+					'-webkit-transform': new_angle,
+					'-moz-transform': new_angle,
+					'-o-transform': new_angle,
+					'-ms-transform': new_angle,
+					'transform': new_angle 
+				});
+				$(image).data('rotate',new_angle_value); 				
+			};
+
 
 			function handleFileSelect(evt) {
 			  files = evt.target.files; 
@@ -137,7 +159,7 @@ script(type='text/javascript').
 						  resizedFiles.push({dataurl: dataurl, fileName: f.name});
 						  console.log(f.name);
 						  var span = document.createElement('span');
-						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" title="Click to remove"' +escape(e.name)+ '"/>'].join('');
+						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" data-rotate="0" title="Click to remove"' +escape(f.name)+ '"/><button id="rotator" type="button" class="glyphicon.glyphicon-repeat.rotate" />'].join('');
 					  
 						  document.getElementById('list').insertBefore(span, null);
 						  loaded++;
@@ -161,7 +183,7 @@ script(type='text/javascript').
 			  
 			}
 			
-			
+
 			function removeFile(e) {
 					var file = $(this).data("file");
 					var imageToRemove = $(this).parent();
