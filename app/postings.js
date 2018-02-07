@@ -394,6 +394,14 @@ exports.upload = function(req, res){
 	var body_images = []; 
 	body_images = req.body.images || [];
 	  
+
+	// console.log('upload -> body_images ...........');
+	// for(var i=0, len=body_images.length; i<len; ++i) {
+	// 	console.log(body_images[i]);
+	//   }
+
+
+
 	var userID = input.idx || 0;
 	var price = input.price || 0;
 	console.log('userID == ' + userID);
@@ -430,16 +438,18 @@ exports.upload = function(req, res){
 function upload_image_files(body_images, postingId) {
 	if (body_images!=undefined) {
 		console.log('L= ' + body_images.length);
+
 		var fileNames = [];
 		for(var i=0, len=body_images.length; i<len; ++i) {
 		  var fileName = new Date().getTime() + '.png';  
 		  var base64Data  = body_images[i].replace(/^data:image\/png;base64,/, "");
 		  var buf = new Buffer(base64Data, 'base64');
+		  var angle = 0;  //body_images[i];
 		  fs.writeFile(dbconfig.path_for_upload+fileName, buf, (err) => {
 				if (err) throw err;
 				console.log('done');
 			});
-		  fileNames.push({FileName: fileName});
+		  fileNames.push({FileName: fileName, angle: angle});
 		}
 				  
 		for(var obj in fileNames) {	  
@@ -447,7 +457,8 @@ function upload_image_files(body_images, postingId) {
 			  var newData = { 
 				  PostingID : postingId,
 				  FileName : fileNames[obj]['FileName'],
-				  IsDeleted : 0 
+				  IsDeleted : 0,
+				  Angle : fileNames[obj]['angle']
 			  };
 				  
 			  connection.query("INSERT INTO postingimage set ? ", newData, function(err, rows) {
@@ -502,7 +513,7 @@ exports.edit_item = function(req, res){
 			  if(deletedImages[obj].hasOwnProperty('id')) {
 					var id = deletedImages[obj]['id'];
 					connection.query("UPDATE postingimage SET IsDeleted = 1 WHERE ImageID='"+id+"'", function(err, rowsImages) {
-						 if (err) logger.error("Error deleting from postingimage table: %s ", err);
+						 if (err) console.log("Error deleting from postingimage table: " + err);
 					})
 			  }
 			}
@@ -515,7 +526,7 @@ exports.edit_item = function(req, res){
 					var angle = rotatedImages[obj]['Angle'];
 					
 					connection.query("UPDATE postingimage SET Angle=" + angle + " WHERE ImageID='"+id+"'", function(err, rowsImages) {
-						 if (err) logger.error("Error update the rotatedImages : %s ", err);
+						 if (err) console.log("Error update the rotatedImages: " + err);
 					})
 			  }
 			}

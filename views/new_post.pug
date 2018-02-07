@@ -104,7 +104,13 @@ script(type='text/javascript').
 					'-ms-transform': new_angle,
 					'transform': new_angle 
 				});
-				$(image).data('rotate',new_angle_value); 				
+				$(image).data('rotate',new_angle_value); 	
+				for(var i=0;i<resizedFiles.length;i++) {
+								  if(resizedFiles[i].fileName === imageId) {
+									  resizedFiles[i].Angle = new_angle_value;
+									  break;
+								  }
+				}			
 			};
 
 
@@ -156,7 +162,7 @@ script(type='text/javascript').
 						  
 						  //console.log('dataurl = ' + dataurl);
 
-						  resizedFiles.push({dataurl: dataurl, fileName: f.name});
+						  resizedFiles.push({dataurl: dataurl, fileName: f.name, Angle: 0});
 						  console.log(f.name);
 						  var span = document.createElement('span');
 						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" data-rotate="0" title="Click to remove"' +escape(f.name)+ '"/><button id="rotator" type="button" class="glyphicon.glyphicon-repeat.rotate" />'].join('');
@@ -214,8 +220,73 @@ script(type='text/javascript').
 			}
 			
 		
+			function transformImages() {
+				resizedFiles.forEach(function(entry) {
+					//console.log('entry.Angle == ' + entry.Angle);
+
+
+					var img = new Image();
+					img.src = entry.dataurl;
+					var canvas = document.createElement("canvas");						 
+					var ctx = canvas.getContext("2d");
+					ctx.drawImage(img, 0, 0);
+					var width;
+					var height;
+					switch (entry.Angle) {
+						case 90:
+							console.log('entry.Angle == 90');
+							width = img.height;
+							height = img.width;
+							break;
+						case 180:
+							console.log('entry.Angle == 180');
+							width = img.width;
+							height = img.height;
+							break;
+						case 270:
+							console.log('entry.Angle == 270');
+							width = img.height;
+							height = img.width;
+							break;
+						default: 
+							console.log('entry.Angle == default');
+							width = img.width;
+							height = img.height;
+							break;
+					}
+
+
+					//- var width = img.width;
+					//- var height = img.height;
+					//- if (width > height) {
+					//- 	if (width > MAX_WIDTH) {
+					//- 		height *= MAX_WIDTH / width;
+					//- 		width = MAX_WIDTH;
+					//- 	}
+					//- } else {
+					//- 		if (height > MAX_HEIGHT) {
+					//- 			width *= MAX_HEIGHT / height;
+					//- 			height = MAX_HEIGHT;
+					//- 		}
+					//- }
+					
+					canvas.width = width;
+					canvas.height = height;
+
+					ctx.translate(width/2,height/2);
+					ctx.rotate(entry.Angle*Math.PI/180);
+
+					ctx.drawImage(img,-img.width/2,-img.height/2); // works for angle = 180!!
+					//ctx.drawImage(img,-img.height/2,-img.width/2); // 90???
+					
+					entry.dataurl = canvas.toDataURL();
+				});
+			}
+
+
 			$("#upload_image").submit(function(e) {
 				e.preventDefault();
+
 				var actionurl = e.currentTarget.action;
 				var formData =  $("#upload_image").serializeArray();
 
@@ -226,11 +297,10 @@ script(type='text/javascript').
 						modal: true,
 						buttons: {
 							"Submit": function () {
-							
+								transformImages();
 								resizedFiles.forEach(function(entry) {
 									formData.push({name: 'images[]', value: entry.dataurl}); 
 								});
-								console.log('resizedFiles.length = ' + resizedFiles.length);
 
 								$.ajax({
 									url: actionurl,
@@ -250,7 +320,7 @@ script(type='text/javascript').
 											var percentComplete = evt.loaded / evt.total;
 											percentComplete = parseInt(percentComplete * 100);
 											 var bar = document.getElementById("submitProgressBar");
-											 bar.value = percentComplete;
+											 //bar.value = percentComplete;
 										}
 									  }, false);
 									  return xhr;
