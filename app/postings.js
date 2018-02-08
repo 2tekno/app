@@ -258,7 +258,7 @@ exports.save_new = function(req, res){
         UserID : userID
     };
 
-	console.log(JSON.stringify(dataPosting));
+	//console.log(JSON.stringify(dataPosting));
     
     connection.query("INSERT INTO posting SET ? ", dataPosting, function(err, rows) {
         
@@ -296,71 +296,6 @@ exports.save_new = function(req, res){
 
 
 
-
-exports.OLDedit = function(req, res){
-    var id = req.params.id;
-        
-    connection.query('SELECT * FROM posting WHERE PostingID = ?', [id], function(err, rows) {
-        if(err) console.log("Error Selecting : %s ", err);
-
-        var mandatoryFields = {
-            Title : rows[0].Title,
-            Description : rows[0].PostingText,
-            Price : rows[0].Price
-        };
-
-        connection.query(dbqueries.postingPropertiesByPostingID(id), function(err, properties)    {
-            if(err) console.log("Error Edit : %s ", err);
-
-            res.render('edit_posting', {page_title: "Edit Posting", properties: properties, id: id, mandatoryFields: mandatoryFields});
-        }); 
-
-    });
-};
-
-
-
-/*Save edited posting*/
-exports.OLDsave_edit = function(req, res){
-    
-      var input = JSON.parse(JSON.stringify(req.body));
-      var postingId = req.params.id;
-      var data = input.adProperties;
-      var mandatoryFields_Title = input.mandatoryFields_Title;
-      var mandatoryFields_Description = input.mandatoryFields_Description;
-      var mandatoryFields_Price = input.mandatoryFields_Price;
-
-      //--------------------------------- 
-      var mandatoryFields = {
-          Title : mandatoryFields_Title,
-          PostingText : mandatoryFields_Description,
-          Price : mandatoryFields_Price
-      };
-
-      connection.query("UPDATE posting SET ? WHERE PostingID = ?", [mandatoryFields,postingId], function(err, rows) {
-          
-          var postingId = JSON.stringify(rows['insertId']);
-          console.log("UPDATE posting WHERE PostingID = " + postingId);
-      
-          for(var obj in data) {
-              
-              if(data[obj].hasOwnProperty('PropertyID')) {
-                  var PostingPropertyID = data[obj]['PostingPropertyID'];
-                  var newData = { 
-                      PropertyValue : data[obj]['PropertyValue'] 
-                  };
-                      
-                  connection.query("UPDATE postingproperty set ? WHERE PostingPropertyID = ? ", [newData,PostingPropertyID], function(err, rows) {
-                      if (err) console.log("Error Updating : %s ", err);
-                  });
-               }
-          }   
-      
-          if (err) console.log("Error Updating : %s ", err);
-          res.redirect('/mypostings');
-    
-      });
-};
 
 exports.details = function(req, res){
     
@@ -505,7 +440,7 @@ exports.edit_item = function(req, res){
 	
 	var deletedImages = [];
 	if (input.deletedImages != null) { deletedImages = JSON.parse(input.deletedImages);  }
-    console.log("deletedImages:  " + JSON.stringify(deletedImages));
+    //console.log("deletedImages:  " + JSON.stringify(deletedImages));
 
 	var rotatedImages = [];
 	if (input.rotatedImages != null) { rotatedImages = JSON.parse(input.rotatedImages);  }

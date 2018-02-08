@@ -46,7 +46,7 @@ module.exports = function(app, passport) {
 	
 	app.get('/mylisting', isLoggedIn,  postings.mylistingData, function(req, res) {
 
-		console.log(req.mylistingData);
+		//console.log(req.mylistingData);
 
 		res.render('mylisting', {
 			mylistingData: req.mylistingData,
