@@ -31,14 +31,22 @@ exports.mylistingData = function(req, res, next){
 
 exports.allpostings = function(req, res){
 	var userID = 0;
-	var queryStr;
-	queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName,if(B.Angle is null,0,B.Angle) AS Angle FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 WHERE A.IsSold=0 GROUP BY A.PostingID ORDER BY A.Created DESC';
+	var queryStr, filterText = '';
+	var searchtext = req.params.searchtext || '';
+	console.log('searchtext ==' + searchtext);
+
+	if (searchtext!='') {
+		searchtext = "'%" + searchtext + "%'";
+		filterText = ' AND (A.Title like '+ searchtext +' OR A.Category like '+ searchtext +'  OR A.PostingText like '+ searchtext +' ) ';
+	}
+
+	queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName,if(B.Angle is null,0,B.Angle) AS Angle FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 WHERE A.IsSold=0 ' + filterText + ' GROUP BY A.PostingID ORDER BY A.Created DESC';
 
 	if (req.user!=undefined) {userID = req.user.UserID;}
 	var showLogin = true;
 	if (req.isAuthenticated()) {
 		showLogin = false;
-		queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName,if(B.Angle is null,0,B.Angle) AS Angle FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 WHERE A.IsSold=0 AND A.UserID !='+userID+' GROUP BY A.PostingID ORDER BY A.Created DESC';
+		queryStr = 'SELECT A.*,if(B.FileName is null or B.FileName = "","no_images.png",B.FileName) AS FileName,if(B.Angle is null,0,B.Angle) AS Angle FROM posting A LEFT JOIN postingimage B ON B.PostingID=A.PostingID AND B.IsDeleted=0 WHERE A.IsSold=0  ' + filterText + ' AND A.UserID !='+userID+' GROUP BY A.PostingID ORDER BY A.Created DESC';
 	}
 	
 	console.log('userId = ' + userID);

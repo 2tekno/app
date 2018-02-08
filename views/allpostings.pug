@@ -1,6 +1,17 @@
 include layouts/header
 include mixins/_post
 
+
+.row
+	.col-sm-6.col-sm-offset-3
+		.div(id="imaginary_container")
+			.div(class="input-group stylish-input-group")
+				input.form-control.required(type='text' id='searchtext' name='searchtext' placeholder="Search")
+				span.input-group-addon
+					button(type='submit' id='search')
+						span(class="glyphicon glyphicon-search")
+
+
 .container
 	if (data)
 		each item in data
@@ -11,15 +22,21 @@ script(type='text/javascript').
 
 	$(document).ready(function() {
 		$("body").on("click", ".box", function() {
-			
 			var postingID = $(this).attr('id');			
 			var url = '/postingsByPostingID/' + postingID;  
-			
 			window.location.href = url;
 			return false;
-
 		});
-		
+
+		$("body").on("click", "#search", function() {
+			var searchtext = $('input[name="searchtext"]').val();
+			//alert(searchtext);
+			var url = '/allpostings/' + searchtext;  
+			window.location.href = url;
+			return false;
+		});
+
+
 		$('img.center-block').each(function() {
 			var deg = $(this).data('rotate') || 0;
 			var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';

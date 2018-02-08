@@ -72,7 +72,9 @@ module.exports = function(app, passport) {
 	app.get('/search', postings.search);
 
 
-    app.get('/allpostings', postings.allpostings);
+	app.get('/allpostings/:searchtext', postings.allpostings);
+	app.get('/allpostings', postings.allpostings);
+	
     app.get('/alllistData/:userID', postings.alllistData);  
   
 	app.get('/postingsByPostingID/:id', postings.postingsByPostingID);
