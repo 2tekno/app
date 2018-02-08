@@ -405,8 +405,11 @@ exports.upload = function(req, res){
 	var userID = input.idx || 0;
 	var price = input.price || 0;
 	console.log('userID == ' + userID);
+	var Category;
+	if (input.category!=undefined) {
+		Category = input.category.join(",");
+	}
 
-	var Category = input.category.join(",");
 	var Location = input.location;
 		  
 	var dataPosting = {

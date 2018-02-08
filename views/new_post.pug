@@ -10,19 +10,19 @@ include layouts/header
 			
 				.editAdFieldSet
 			
-					select.chosen-select(id='type' name='type')
+					select.chosen-select(id='type' name='type' )
 						each item in ListTypes
 							option #{item}
 
 				.editAdFieldSet
-					select.chosen-select(style={width: '100%'} id='category' name='category[]' data-placeholder='Select Category' multiple tabindex='4')
+					select.chosen-select(style={width: '100%'} id='category' name='category[]' data-placeholder='Select Category' multiple tabindex='4' )
 						each item in ListCategories
 							option #{item}
 
 							
 				.editAdFieldSet
 					label(for='Title' style={width: '100%'}) Title
-						input.form-control.required(type='text' id='title' name='title')              
+						input.form-control.required(type='text' id='title' name='title' required)              
 
 				.editAdFieldSet
 					label(for='Description' style={width: '100%'}) Description
