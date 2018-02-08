@@ -6,9 +6,12 @@ var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 var dbconfig = require('../config/database');
 var connection = mysql.createConnection(dbconfig.connection);
-var config = require('../config/auth.js');
-
+//var config = require('../config/auth.js');
 var users = require('../models/user');
+
+var config = require('../config/config.json')[process.env.NODE_ENV || 'dev'];
+
+
 
 function extractProfile (profile) {
 
