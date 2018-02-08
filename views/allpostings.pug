@@ -30,7 +30,6 @@ script(type='text/javascript').
 
 		$("body").on("click", "#search", function() {
 			var searchtext = $('input[name="searchtext"]').val();
-			//alert(searchtext);
 			var url = '/allpostings/' + searchtext;  
 			window.location.href = url;
 			return false;
