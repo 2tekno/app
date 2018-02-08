@@ -482,7 +482,11 @@ exports.edit_item = function(req, res){
 	var Price = input.price;
 	var Type = input.type;
 	var IsSold=0;
-	var Category = input.category.join(",");
+	//var Category = input.category.join(",");
+	var Category;
+	if (input.category!=undefined) {
+		Category = input.category.join(",");
+	}
 	var Location = input.location;
 	
 	if (input.issold!=undefined) {

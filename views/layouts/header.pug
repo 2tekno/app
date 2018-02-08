@@ -47,6 +47,7 @@ body
 			.collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
 				ul.nav.navbar-nav
 					li: a.glyphicon.glyphicon-home(href='/')
+					li: input.form-control.required(type='text' id='search' name='search')
 					li: a.glyphicon.glyphicon-tags(href='/allpostings')  All Items
 					if (user)
 						li: a.glyphicon.glyphicon-plus(href='/upload')  New Item

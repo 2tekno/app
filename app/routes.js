@@ -27,7 +27,7 @@ module.exports = function(app, passport) {
 
         var userID = req.user.UserID || 0;
         res.render('new_post', {userID: userID, 
-								//showLogin: showLogin, 
+								user: req.user,
 								ListLocations: dbconfig.ListLocations, 
 								ListTypes: dbconfig.ListTypes,
 								ListCategories: dbconfig.ListCategories								
@@ -35,7 +35,6 @@ module.exports = function(app, passport) {
     });
     
 	
-	//app.post('/postings/edit/:id',postings.save_edit);
 	app.get('/postings/edit/:id', postings.itemDataByPostingID, isLoggedIn, function(req, res) {
 
 		res.render('edit_item', {
@@ -43,7 +42,6 @@ module.exports = function(app, passport) {
 			user : req.user
 		});
 	});
-	
 	
 	
 	app.get('/mylisting', isLoggedIn,  postings.mylistingData, function(req, res) {
@@ -56,9 +54,6 @@ module.exports = function(app, passport) {
 		});
 	});
 	
-
-	
-
 
 	app.get('/myInBoxMessages/:userID', messages.myInBoxMessages);
 	app.get('/myOutBoxMessages/:userID', messages.myOutBoxMessages);
@@ -95,7 +90,6 @@ module.exports = function(app, passport) {
     app.get('/categories/subcategories/:id', categories.getAllSubCategories, categories.renderSubCategoriesPage);
     app.get('/properties/propertiesfromcategory/:id', properties.propertiesfromcategory);
     app.post('/properties/save2/:id', properties.save2);
-   // app.post('/properties/new_post/:id', properties.new_post);
     app.get('/properties', properties.getAllProperties, properties.renderPropertiesPage);
     app.get('/properties/add', properties.getAllPropertyDataTypes, properties.renderPropertyAddPage);   
     app.post('/properties/add', properties.save);
@@ -103,21 +97,15 @@ module.exports = function(app, passport) {
     app.post('/properties/edit/:id', properties.save_edit);   
     app.get('/properties/delete/:id', properties.delete);
      
-    //app.get('/categories', categories.getAllCategories, categories.renderCategoriesPage);
     app.get('/categories/add', categories.add);
     app.post('/categories/add', categories.save);
     app.get('/categories/edit/:id', categories.edit); 
     app.post('/categories/edit/:id',categories.save_edit);
     app.get('/categories/delete/:id', categories.delete);
       
-      
     app.get('/postings/add', categories.getAllSubCategories, categories.renderSubCategoriesPage);
     app.post('/postings/save_new/:categoryID', postings.save_new);
-    
     app.get('/postings/delete/:id', isLoggedIn, postings.delete);
-    //app.get('/postings/edit/:id', postings.edit); 
-    //app.post('/postings/edit/:id',postings.save_edit);
-
     app.get('/postings/details/:id', postings.details); 
 
 
@@ -224,15 +212,13 @@ module.exports = function(app, passport) {
 			  }
 	);
 	
-	
-	
+
 };
 
 // route middleware to make sure
 function isLoggedIn(req, res, next) {
 
 	// if user is authenticated in the session, carry on
-	//if (req.isAuthenticated()) {return next();}
 	if (req.user) {
 		//console.log('user ==' + req.user);
 		return next();
