@@ -205,13 +205,19 @@ fieldset {
   align-items: center;
 }
 
+.Xspanclass {
+    height: 250px;
+
+}
+
 .thumb {
-    height: 100px;
-    border: 1px solid #000;
+    height: 150px;
+    width: 150px;
+    border: 1px solid transparent;
 	margin: 10px 0px 10px 10px;
-    Xmargin: 25px 25px 25px 10px;
 	position: relative;
-	
+    
+    object-fit:scale-down;
 }
 
 .galleryImage {

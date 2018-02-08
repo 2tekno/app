@@ -154,7 +154,9 @@ script(type='text/javascript').
 						  }
 						  canvas.width = width;
 						  canvas.height = height;
-										  
+						
+							console.log('canvas width x height = ' + canvas.width + 'x' + canvas.height);				  
+						  
 						  var ctx = canvas.getContext("2d");
 						  ctx.drawImage(img, 0, 0, width, height);
 
@@ -165,7 +167,7 @@ script(type='text/javascript').
 						  resizedFiles.push({dataurl: dataurl, fileName: f.name, Angle: 0});
 						  console.log(f.name);
 						  var span = document.createElement('span');
-						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" data-rotate="0" title="Click to remove"' +escape(f.name)+ '"/><button id="rotator" type="button" class="glyphicon.glyphicon-repeat.rotate" />'].join('');
+						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" data-rotate="0" title="Click to remove"' +escape(f.name)+ '"/><button id="rotator" type="button" class="glyphicon glyphicon-repeat" />'].join('');
 					  
 						  document.getElementById('list').insertBefore(span, null);
 						  loaded++;
@@ -222,46 +224,35 @@ script(type='text/javascript').
 		
 			function transformImages() {
 				resizedFiles.forEach(function(entry) {
-					//console.log('entry.Angle == ' + entry.Angle);
-
-
 					var img = new Image();
 					img.src = entry.dataurl;
 					var canvas = document.createElement("canvas");						 
 					var ctx = canvas.getContext("2d");
 					ctx.drawImage(img, 0, 0);
-					var width;
-					var height;
+
 					switch (entry.Angle) {
-						case 90:
-							console.log('entry.Angle == 90');
-							width = img.height;
-							height = img.width;
-							break;
+						case 0:	
 						case 180:
-							console.log('entry.Angle == 180');
-							width = img.width;
-							height = img.height;
+							//console.log('entry.Angle == 180');
+							canvas.width = img.width;
+							canvas.height = img.height;
 							break;
+						case 90:
 						case 270:
-							console.log('entry.Angle == 270');
-							width = img.height;
-							height = img.width;
-							break;
-						default: 
-							console.log('entry.Angle == default');
-							width = img.width;
-							height = img.height;
+							//console.log('entry.Angle == 270');
+							canvas.width = img.height;
+							canvas.height = img.width;
 							break;
 					}
-					
-					canvas.width = width;
-					canvas.height = height;
 
-					ctx.translate(width/2,height/2);
+					var  cw = canvas.width * 0.5, ch = canvas.height * 0.5;
+					ctx.translate(cw, ch);
 					ctx.rotate(entry.Angle*Math.PI/180);
-					ctx.drawImage(img,-width/2,-height/2); // works for angle = 180!!
-					
+					ctx.translate(-img.width * 0.5, -img.height * 0.5);
+					/// draw image and reset transform
+					ctx.drawImage(img, 0, 0);
+					ctx.setTransform(1, 0, 0, 1, 0, 0);
+
 					entry.dataurl = canvas.toDataURL();
 				});
 			}

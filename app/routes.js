@@ -40,7 +40,6 @@ module.exports = function(app, passport) {
 
 		res.render('edit_item', {
 			itemData: req.itemData,
-			//showLogin: showLogin,
 			user : req.user
 		});
 	});
@@ -49,9 +48,10 @@ module.exports = function(app, passport) {
 	
 	app.get('/mylisting', isLoggedIn,  postings.mylistingData, function(req, res) {
 
+		console.log(req.mylistingData);
+
 		res.render('mylisting', {
 			mylistingData: req.mylistingData,
-			//showLogin: showLogin,
 			user : req.user
 		});
 	});
