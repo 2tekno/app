@@ -1,4 +1,6 @@
 include layouts/header
+include test
+
 
 .container.page-data
 	form(method='POST' action='/edit_item' id='edit_item' enctype="multipart/form-data")
@@ -8,10 +10,23 @@ include layouts/header
 			input.form-control(type='hidden' id='idxpost' name='idxpost' value=itemData.PostingID)
 
 			.editAdSection
-			
+				+test
+
+				.editAdFieldSet.form-check
+					input.form-check-input(type='checkbox' style={'bottom': '1px;'})
+					label.form-check-label(for='inlineFormCheck') 
+					| Inactive 222
+
+				.editAdFieldSet.form-check
+					input.form-check-input(type='checkbox' style={'bottom': '1px;'})
+					label.form-check-label(for='inlineFormCheck') 
+					| Inactive 333
+
+
 				.editAdFieldSet
-					label.form-check-label(for="IsSold") Sold
-						input.form-control(type="checkbox", name="issold", checked=(itemData.IsSold===1 ? "checked" : undefined))
+					label.form-check-label(for="IsSold") 
+						input(type="checkbox", name="issold", checked=(itemData.IsSold===1 ? "checked" : undefined))
+						| Sold
   
 				.editAdFieldSet
 					select.chosen-select(style={width: '100%'} id='type' name='type' data-placeholder='')
