@@ -1,57 +1,51 @@
 include layouts/header
-include test
 
 
 .container.page-data
-	form(method='POST' action='/edit_item' id='edit_item' enctype="multipart/form-data")
+	form.form-horizontal(method='POST' action='/edit_item' id='edit_item' enctype="multipart/form-data")
 
-		.col-sm-8.well
+		.well(style={'margin-top':'30px', 'margin-bottom': '70px'})
 			input.form-control(type='hidden' id='idx' name='idx' value=user.UserID) 
 			input.form-control(type='hidden' id='idxpost' name='idxpost' value=itemData.PostingID)
 
 			.editAdSection
-				+test
 
-				.editAdFieldSet.form-check
-					input.form-check-input(type='checkbox' style={'bottom': '1px;'})
-					label.form-check-label(for='inlineFormCheck') 
-					| Inactive 222
-
-				.editAdFieldSet.form-check
-					input.form-check-input(type='checkbox' style={'bottom': '1px;'})
-					label.form-check-label(for='inlineFormCheck') 
-					| Inactive 333
-
-
-				.editAdFieldSet
+				.form-group.form-row
 					label.form-check-label(for="IsSold") 
 						input(type="checkbox", name="issold", checked=(itemData.IsSold===1 ? "checked" : undefined))
 						| Sold
   
-				.editAdFieldSet
+				.form-group.form-row
 					select.chosen-select(style={width: '100%'} id='type' name='type' data-placeholder='')
 						each item in itemData.ListTypes
 							option(selected=itemData.Type==item) #{item}
 	
-				.editAdFieldSet
+				.form-group.form-row
 					select.chosen-select(style={width: '100%'} id='category' name='category[]' data-placeholder='Select Category' multiple tabindex='4')
 						each item in itemData.ListCategories
 							option(selected=itemData.Category.indexOf(item) != -1) #{item}
 							
-				.editAdFieldSet
-					label(for='Title' style={width: '100%'}) Title
-						input.form-control.required(type='text' id='title' name='title' value=itemData.Title  required)
 
-				.editAdFieldSet
-					label(for='Description' style={width: '100%'}) Description
-						textarea.form-control.required(rows='5' id='description' name='description')
-							| #{itemData.PostingText}						
+				.form-group.form-row
+					label.col-sm-3.col-form-label(for='JobTitle' ) Title
+					.col-sm-9
+						input.form-control.required(type='text' id='title' name='title' value=itemData.Title  required  )
+				
+				.form-group.form-row
+					label.col-sm-3.col-form-label(for='Description' ) Description
+					.col-sm-9
+						textarea.form-control.required(rows='4' id='description' name='description')
+							| #{itemData.PostingText}	
 
-				.editAdFieldSet
-					label(for='Price') Selling Price
-						input.form-control.required(type='number' id='price' name='price' value=itemData.Price) 
+					
+				.form-group.form-row
+					label.col-sm-3.col-form-label(for='Price' ) Selling Price
+					.col-sm-9
+						input.form-control.required(type='number' id='price' name='price' value=itemData.Price  required  )
 
-				.editAdFieldSet
+
+
+				.form-group.form-row
 					select.chosen-select(id='location' name='location' data-placeholder='')
 						each item in itemData.ListLocations
 							option(selected=itemData.Location==item) #{item}
@@ -68,9 +62,10 @@ include test
 							each image in itemData.ImageList
 								span(id=`${image.ImageID}`)
 									img.thumb(src="/uploads/"+`${image.FileName}` id=`${image.ImageID}` data-rotate=`${image.Angle}` data-file=`${image.FileName}` title="Click to remove")
-									button.glyphicon.glyphicon-repeat.rotate(type='button' id=`${image.ImageID}`) 
+									button.fa.fa-repeat.rotate(type='button' id=`${image.ImageID}`) 
 									
-			button.btn.btn-primary.pull-right(type='submit' id='submit') Submit Posting
+				.form-group.form-row
+					button.btn.btn-primary.pull-right(type='submit' id='submit') Submit Posting
 
 		
 		.div(id="dialog-delete-confirm" title="Remove image?")
@@ -236,7 +231,7 @@ script(type='text/javascript').
 						  console.log(f.name);
 						  
 						  var span = document.createElement('span');		
-						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" data-rotate="0" title="Click to remove"' +escape(f.name)+ '"/><button id="rotator" type="button" class="glyphicon glyphicon-repeat" />'].join('');  
+						  span.innerHTML = ['<img class="thumb" src="' +dataurl+ '\" data-file="'+f.name+ '" data-rotate="0" title="Click to remove"' +escape(f.name)+ '"/><button id="rotator" type="button" class="fa fa-repeat" />'].join('');  
 						  document.getElementById('list').insertBefore(span, null);
 						 
 						 loaded++;

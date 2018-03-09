@@ -14,6 +14,16 @@ a {
 }
 
 
+ul.navbar-nav{
+
+    Xpadding-top: 20px;
+    vertical-align: middle;
+ }
+    
+
+
+
+
 #imaginary_container{
     margin-top:20%; /* Don't copy this */
 }
@@ -379,7 +389,7 @@ textarea{ border:1px solid #ddd;width:296px;}
 #footer{margin-left:82%;margin-top:10%}
 
 /* TOOLBAR */
-nav{
+/* nav{
   padding-top: 5px;
   padding: 0 30px;
 }
@@ -399,13 +409,13 @@ nav ul li a, visited{
   display: block;
   padding: 15px;
   text-decoration: none;
-}
-.navigation{
+} */
+/* .navigation{
   width: 100%;
 }
 .form-group{
   padding: 0 20px;
-}
+} */
 .middle{
   width: 57%;
   float: left;
@@ -435,7 +445,7 @@ nav ul li a, visited{
 #form_input{
   width: 100%;
 }
-#menu{
+/* #menu{
 
 }
 #menu li{
@@ -444,4 +454,4 @@ nav ul li a, visited{
 }
 #menu li a{
   text-decoration: none;
-}
+} */
