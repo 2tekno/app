@@ -13,16 +13,35 @@ a {
   color: #00B7FF;
 }
 
+.navbar {
+    background-color: #ff5500;
+    
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #d6e2ec;
+}
 
 ul.navbar-nav{
 
-    Xpadding-top: 20px;
+    padding-top: 20px;
     vertical-align: middle;
  }
     
+ .navbar-brand {
+    padding: 0;
+  }
+  .navbar-nav .nav-link {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 20px;
+    line-height: 20px;
 
+  }
 
-
+  li.nav-item {
+    list-style-type: none;
+}
 
 #imaginary_container{
     margin-top:20%; /* Don't copy this */

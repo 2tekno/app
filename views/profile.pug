@@ -3,37 +3,38 @@ include mixins/_inboxmessage
 include mixins/_outboxmessage
 include mixins/_myitem
 
-.container
+.container(style={'margin-top':'90px', 'margin-bottom': '70px'})
 	input.form-control(type='hidden' id="idx" name='idx' value=user.UserID)  
 	
-	.row.col-sm-6.well
+	.well
 		p Email: 
 			| #{user.Email}
 
-	.row.well
-		ul.nav.nav-tabs
-			li.active
-				a(data-toggle="tab" href="#inbox") Inbox
-			li
-				a(data-toggle="tab" href="#outbox") Outbox
-			li
-				a(data-toggle="tab" href="#myitems") My Items
-		.tab-content
-			.tab-pane.fade.in.active(id="inbox")
-				.col-sm-12
-					if (inbox)
-						each item in inbox
-							+inboxmessage( item )
-			.tab-pane.fade(id="outbox")
-				.col-sm-12
-					if (outbox)
-						each item in outbox
-							+outboxmessage( item )
-			.tab-pane.fade(id="myitems")
-				.col-sm-12
-					if (mylistingData)
-							each item in mylistingData
-								+myitem( item )
+	.well
+		ul.nav.nav-tabs(role='tablist')
+			li.nav-item
+				a.nav-link.active(data-toggle="tab" role='tab' href="#inbox") Inbox
+			li.nav-item
+				a.nav-link(data-toggle="tab" role='tab' href="#outbox") Outbox
+			li.nav-item
+				a.nav-link(data-toggle="tab" role='tab' href="#myitems") My Items
+
+	.tab-content
+		#inbox.tab-pane.fade.in.active(role='tabpanel')
+			.col-sm-12
+				if (inbox)
+					each item in inbox
+						+inboxmessage( item )
+		#outbox.tab-pane.fade.in(role='tabpanel')
+			.col-sm-12
+				if (outbox)
+					each item in outbox
+						+outboxmessage( item )
+		#myitems.tab-pane.fade.in(role='tabpanel')
+			.col-sm-12
+				if (mylistingData)
+						each item in mylistingData
+							+myitem( item )
 				
 	.div(id="dialog-reply" title="Reply Message") 
 		.editAdFieldSet

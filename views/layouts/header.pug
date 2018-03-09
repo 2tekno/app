@@ -16,8 +16,6 @@ head
 	link(rel='stylesheet' href='/../bootstrap/css/bootstrap-theme.min.css')
 
 	//- link(rel='stylesheet' href='/../css/style.css')
-
-	//- link(rel='stylesheet' href='/../css/sticky-footer-navbar.css')
 	
 	link(rel='stylesheet' href='/../css/animate.min.css')
 	link(rel='stylesheet' href='/../css/animate.css')
@@ -44,33 +42,18 @@ body
 	+topmenu
 	+bottom_bar
 
-	//- .nav.navbar-inverse.container-fluid.navbar-fixed-top
-	//- 	.navbar-header
-	//- 		button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='.navbar-collapse')
-	//- 			span.sr-only Toggle navigation
-	//- 			span.icon-bar
-	//- 			span.icon-bar
-	//- 			span.icon-bar
-
-	//- 		.collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
-	//- 			ul.nav.navbar-nav
-	//- 				li: a.glyphicon.glyphicon-home(href='/')
-	//- 				li: a.glyphicon.glyphicon-tags(href='/allpostings')  All Items
-	//- 				if (user)
-	//- 					li: a.glyphicon.glyphicon-plus(href='/upload')  New Item
-	//- 					li: a.glyphicon.glyphicon-list(href='/mylisting')  My Items
 
 
-	//- 	.collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
-	//- 			.navbar-header.navbar-right
-	//- 				ul.nav.navbar-nav
-	//- 					if (user)
-	//- 						li: a.glyphicon.glyphicon-info-sign(href='/profile')  My Account	
-	//- 						li: a.glyphicon.glyphicon-log-out(href='/logout')  Logout	
-	//- 					else
-	//- 						li: a.glyphicon.glyphicon-log-in(href='/login')  Login					
-						
-													
-	//- .footer
-	//- 	.container
-	//- 		p.text-muted.pull-right &copy; 2Tekno Systems
+script(type='text/javascript').
+
+	$(document).ready(function() {
+
+		$("body").on("click", ".fa-search", function() {
+			var searchtext = $('input[name="searchtext"]').val();
+			var url = '/allpostings/' + searchtext;  
+			window.location.href = url;
+			return false;
+		});
+
+
+	});
