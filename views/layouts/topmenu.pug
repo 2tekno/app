@@ -1,0 +1,43 @@
+mixin topmenu
+
+	//- nav.navbar.navbar-expand-md.navbar-light.bg-faded.fixed-top.navbar-dark.bg-dark.navbar-custom
+	nav.navbar.navbar-expand-md.navbar-light.fixed-top
+		a.navbar-brand(href='/') Buy & Sell
+		button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar5')
+			span.navbar-toggler-icon
+		#navbar5.navbar-collapse.collapse
+			ul.navbar-nav
+				li.nav-item
+					a.nav-link(href='/allpostings') All Items
+
+				if (user)
+					li.nav-item
+						a.nav-link(href='/mylisting')  My Items
+
+					li.nav-item
+						a.nav-link(href='/upload')  New Item
+
+
+			form.mx-4.my-auto.d-inline.w-30.ml-auto
+				.input-group
+					input.form-control.border.border-right-0(type='text' id='searchtext' name='searchtext' placeholder='Search...')
+					span.input-group-append
+						button.btn.btn-outline-secondary.border.border-left-0(type='button')
+							i.fa.fa-search
+			
+			ul.navbar-nav.ml-auto
+				li.nav-item.dropdown
+					a#navbarDropdownMenuLink.nav-link(href='http://example.com', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+						i.fa.fa-cog.fa-lg
+					.dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdownMenuLink')
+						if (user)
+							a.dropdown-item(href='/profile') My account
+							a.dropdown-item(href='/logout') Logout
+						else
+							a.dropdown-item(href='/login') Login
+
+
+
+
+
+
