@@ -1,13 +1,14 @@
 include layouts/header
 include mixins/_myitem
 
-.container(style={'margin-top':'70px', 'margin-bottom': '70px'})
+.container(style={'margin-top':'100px', 'margin-bottom': '70px'})
 	
-	.row.well
-		.col-sm-12
-			if (mylistingData)
-					each item in mylistingData
-						+myitem( item )
+	//- .row.well
+	//- 	.col-sm-12
+	.grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 150 }')
+		if (mylistingData)
+				each item in mylistingData
+					+myitem(item)
 
 
 									

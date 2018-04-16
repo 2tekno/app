@@ -3,24 +3,26 @@ include layouts/header
 input.form-control(type='hidden' id="idxpostid" name='idxpostid' value=posting.PostingID) 
 input.form-control(type='hidden' id="idxuserid" name='idxuserid' value=userID) 
 
-.container(style={'margin-top':'70px', 'margin-bottom': '70px'})
-	.col-sm-12.col-sm-3.well
-		img.center-block.img-responsive(src="/uploads/" + `${posting.MainImage}` data-rotate=`${posting.Angle}`)
+.container(style={'margin-top':'100px', 'margin-bottom': '70px'})
+	.row
+		.col-sm-3.well
+			img.center-block.img-responsive(src="/uploads/" + `${posting.MainImage}` data-rotate=`${posting.Angle}`)
 
-	.col-sm-7.col-sm-offset-2.well
-		p.pull-right #{posting.Type}
-		h2 #{posting.Title}
-		p #{posting.PostingText}
-		p.fa.fa-dollar #{posting.Price}
-		p.pull-right #{posting.Location}
+	.row
+		.col-sm-7.col-sm-offset-2.well
+			p.pull-right #{posting.Type}
+			h2 #{posting.Title}
+			p #{posting.PostingText}
+			p.fa.fa-dollar #{posting.Price}
+			p.pull-right #{posting.Location}
 		
-	.col-sm-12.well
-				
+	.row
+		.col-sm-12.well
 			each image in images
 				img.galleryImage(src="/uploads/" + `${image.FileName}` data-rotate=`${image.Angle}`)
 
-	.col-sm-12
-		button.btn.btn-warning.btn-lg.pull-right(type='submit' id='contactSeller') Contact Seller 
+	//- .col-sm-12
+	button.btn.btn-warning.btn-lg.pull-right(type='submit' id='contactSeller') Contact Seller 
 
 
 	.div(id="divDialog") 
