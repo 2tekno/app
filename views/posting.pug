@@ -3,7 +3,7 @@ include layouts/header
 input.form-control(type='hidden' id="idxpostid" name='idxpostid' value=posting.PostingID) 
 input.form-control(type='hidden' id="idxuserid" name='idxuserid' value=userID) 
 
-.container
+.container(style={'margin-top':'70px', 'margin-bottom': '70px'})
 	.col-sm-12.col-sm-3.well
 		img.center-block.img-responsive(src="/uploads/" + `${posting.MainImage}` data-rotate=`${posting.Angle}`)
 

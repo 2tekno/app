@@ -1,6 +1,6 @@
 mixin post(obj)
 
-	.col-sm-3.box(id = `${obj.PostingID}` onmouseover="" style="cursor: pointer;")
+	.col-md-2.box(id = `${obj.PostingID}` onmouseover=""  style={'cursor': 'pointer','margin-top':'5px', 'margin-bottom': '5px'})
 		.inner.well
 			p.pull-right #{obj.Type}
 			h3.post-header #{obj.Title.substring(0,50)}
