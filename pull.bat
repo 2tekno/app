@@ -1,0 +1,1 @@
+git pull https://github.com/2tekno/app

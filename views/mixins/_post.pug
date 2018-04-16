@@ -1,10 +1,10 @@
 mixin post(obj)
 
-	.col-md-2.box(id = `${obj.PostingID}` onmouseover=""  style={'cursor': 'pointer','margin-top':'5px', 'margin-bottom': '5px'})
-		.inner.well
-			p.pull-right #{obj.Type}
-			h3.post-header #{obj.Title.substring(0,50)}
-			img.center-block.img-responsive(src="/uploads/" + `${obj.FileName}`  data-rotate=`${obj.Angle}`)
-			p.post-text #{obj.PostingText.substring(0,100)}
-			p.fa.fa-dollar #{obj.Price}
+	//- .col-md-2.box(id = `${obj.PostingID}` onmouseover=""  style={'cursor': 'pointer','margin-top':'5px', 'margin-bottom': '5px'})
+	.grid-item
+		p.pull-right #{obj.Type}
+		h3.post-header #{obj.Title.substring(0,50)}
+		img.center-block.img-responsive(src="/uploads/" + `${obj.FileName}`  data-rotate=`${obj.Angle}`)
+		p.post-text #{obj.PostingText.substring(0,100)}
+		p.fa.fa-dollar #{obj.Price}
 	
