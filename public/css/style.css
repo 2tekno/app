@@ -27,8 +27,8 @@ a {
 }
 
 .navbar {
-    background-color: #ff5500;
-    
+    /* background-color: #ff5500; */
+    background-color:grey;
 }
 
 .navbar-light .navbar-nav .nav-link {

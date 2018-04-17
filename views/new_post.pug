@@ -1,52 +1,14 @@
 include layouts/header
+include itembody
 
-.container.page-data
-	form(method='POST' action='/upload' id="upload_image" enctype="multipart/form-data")
+.container.page-data(style={'margin-top':'70px', 'margin-bottom': '70px'})
+	form.form-horizontal(method='POST' action='/upload' id="upload_image" enctype="multipart/form-data")
 
-		.col-sm-8.well
+		.well.col-sm-12
 			input.form-control(type='hidden' id="idx" name='idx' value=userID) 
 
-			.editAdSection  
-			
-				.editAdFieldSet
-			
-					select.chosen-select(id='type' name='type' )
-						each item in ListTypes
-							option #{item}
-
-				.editAdFieldSet
-					select.chosen-select(style={width: '100%'} id='category' name='category[]' data-placeholder='Select Category' multiple tabindex='4' )
-						each item in ListCategories
-							option #{item}
-
-							
-				.editAdFieldSet
-					label(for='Title' style={width: '100%'}) Title
-						input.form-control.required(type='text' id='title' name='title' required)              
-
-				.editAdFieldSet
-					label(for='Description' style={width: '100%'}) Description
-						textarea.form-control.required(rows='5' id='description' name='description') 
-
-				.editAdFieldSet
-					label(for='Price') Selling Price
-						input.form-control.required(type='number' id='price' name='price') 
-
-				.editAdFieldSet
-					select.chosen-select(id='location' name='location' data-placeholder='')
-						each item in ListLocations
-							option #{item} 
- 	   
-
-				.fieldset
-					
-					.span.btn.btn-primary.btn-file
-						| Add Image
-						input(type="file" id="files" multiple name="files")
-						progress.noshow(id="progressBar" max="100" value="0")
-						
-					.legend
-						output(id="list")
+			.editAdSection
+				+itembody
 						
 			button.btn.btn-primary.pull-right(type='submit' id='submit') Submit Posting
 

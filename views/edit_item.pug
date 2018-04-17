@@ -1,4 +1,5 @@
 include layouts/header
+include itembody
 
 
 .container.page-data(style={'margin-top':'70px', 'margin-bottom': '70px'})
@@ -10,62 +11,9 @@ include layouts/header
 
 			.editAdSection
 
-				.form-group.form-row.col-sm-9
-					label.col-sm-3.col-form-label(for="IsSold") 
-						input(type="checkbox", name="issold", checked=(itemData.IsSold===1 ? "checked" : undefined))
-						| Sold
-  
-				.form-group.form-row.col-sm-9
-					select.chosen-select(style={width: '100%'} id='type' name='type' data-placeholder='')
-						each item in itemData.ListTypes
-							option(selected=itemData.Type==item) #{item}
-	
-				.form-group.form-row.col-sm-9
-					select.chosen-select(style={width: '100%'} id='category' name='category[]' data-placeholder='Select Category' multiple tabindex='4')
-						each item in itemData.ListCategories
-							option(selected=itemData.Category.indexOf(item) != -1) #{item}
-							
+				+itembody
 
-				.form-group.form-row.col-sm-9
-					label.col-sm-3.col-form-label(for='JobTitle' ) Title
-					.col-sm-9
-						input.form-control.required(type='text' id='title' name='title' value=itemData.Title  required  )
-				
-				.form-group.form-row.col-sm-9
-					label.col-sm-3.col-form-label(for='Description' ) Description
-					.col-sm-9
-						textarea.form-control.required(rows='3' id='description' name='description')
-							| #{itemData.PostingText}	
-
-					
-				.form-group.form-row.col-sm-9
-					label.col-sm-3.col-form-label(for='Price' ) Selling Price
-					.col-sm-9
-						input.form-control.required(type='number' id='price' name='price' value=itemData.Price  required  )
-
-
-				.form-group.form-row.col-sm-9
-					select.chosen-select(id='location' name='location' data-placeholder='')
-						each item in itemData.ListLocations
-							option(selected=itemData.Location==item) #{item}
-							
-				.fieldset.col-sm-12
-					
-					.span.btn.btn-primary.btn-file
-						| Add Image
-						input(type="file" id="files"  name="files")
-						progress.noshow(id="progressBar" max="100" value="0")
-						
-					.legend
-						output(id="list")
-							each image in itemData.ImageList
-								span(id=`${image.ImageID}`)
-									img.thumb(src="/uploads/"+`${image.FileName}` id=`${image.ImageID}` data-rotate=`${image.Angle}` data-file=`${image.FileName}` title="Click to remove")
-									button.fa.fa-repeat.rotate(type='button' id=`${image.ImageID}`) 
-									
-				.row.col-sm-12
-					button.btn.btn-primary.ml-auto(type='submit' id='submit') Submit Posting
-
+			button.btn.btn-primary.pull-right(type='submit' id='submit') Submit Posting
 
 		
 		.div(id="dialog-delete-confirm" title="Remove image?")
