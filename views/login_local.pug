@@ -9,13 +9,13 @@ include layouts/header
 				.editAdSection  
 					h3 Login
 					.editAdFieldSet
-						label(for='UserName') User Name
-						input.form-control(type='text' id='UserName' name='UserName')               
-					.editAdFieldSet
-						label(for='Password') Password
-						input.form-control(type='password' id='Password'  name='Password')
+						//- label(for='UserName') User Name
+						input.form-control(type='text' id='UserName' name='UserName' placeholder='username / email')               
+
+						//- label(for='Password') Password
+						input.form-control(type='password' id='Password'  name='Password' placeholder='password')
 					
-					button.btn.btn-primary.pull-right(type='submit' id='submit') Login 
+						button.btn.btn-primary.pull-right(type='submit' id='submit') Login 
 
 				a(href='/signup_local') Or create account
 
