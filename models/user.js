@@ -42,12 +42,14 @@ exports.create = function(UserName, Email, Password, done) {
 	 })
 }
 
-exports.createUser = function(ip, UserName, Email, done) {
-       var user = {
-			UserName 	: UserName,
-			Email 		: Email,
-			IpAddress	: ip
-		};
+exports.createUser = function(ip, UserName, Email, Password, done) {
+      console.log('createUser');	
+      var user = {
+        UserName 	: UserName,
+        Password 	: Password,
+        Email 		: Email,
+        IpAddress	: ip
+      };
 		var insertQuery = "INSERT INTO users set ? ";
 		connection.query(insertQuery, [user], function(err, result) {
 			if (err) return done(err)
@@ -70,41 +72,64 @@ exports.getAllUsers = function(done) {
 exports.getUserByID = function(userId, done) {
    connection.query('SELECT * FROM users WHERE UserID = ?', userId, function (err, rows) {
     if (err) return done(err)
-	var user = {
-		UserName: rows[0].UserName,
-		Email: rows[0].Email,
-		UserID : rows[0].UserID
-	};
-    done(null, user)
-  })
+    if (rows.length==1) {
+        var user = {
+          UserName: rows[0].UserName,
+          Email: rows[0].Email,
+          UserID : rows[0].UserID
+        };
+        return done(null, user);
+      }
+      else {return done(null, null);} 
+    })
 }
 
 exports.getUser = function(userId) {
    connection.query('SELECT * FROM users WHERE UserID = ?', userId, function (err, rows) {
     if (err) return done(err)
-	var user = {
-		UserName: rows[0].UserName,
-		Email: rows[0].Email,
-		UserID : rows[0].UserID
-	};
-    return user;
-  })
+    var user = {
+      UserName: rows[0].UserName,
+      Email: rows[0].Email,
+      UserID : rows[0].UserID
+    };
+      return user;
+    })
 }
 
 exports.getUserByEmail = function(email, done) {
-	console.log('looking for: ' + email);
+	console.log('getUserByEmail looking for: ' + email);
 	
    connection.query('SELECT * FROM users WHERE Email = ?', email, function (err, rows) {
     if (err) return done(err)
-	else done(null, rows)
+	  if (rows.length==1) {
+          var user = {
+            UserName: rows[0].UserName,
+            Email: rows[0].Email,
+            UserID : rows[0].UserID,
+            Password : rows[0].Password
+
+          };
+          return done(null, user);
+    }
+    else {return done(null, null);} 
   })
 }
 
-exports.getUserByUserName = function(UserName, done) {
-	console.log('looking for: ' + UserName);
+exports.getUserByUserName = function(UserName, Password, done) {
+	console.log('getUserByUserName looking for: ' + UserName);
 	
    connection.query('SELECT * FROM users WHERE UserName = ?', UserName, function (err, rows) {
     if (err) return done(err)
-	else done(null, rows)
+	  if (rows.length==1) {
+          var user = {
+            UserName: rows[0].UserName,
+            Email: rows[0].Email,
+            UserID : rows[0].UserID,
+            Password : rows[0].Password
+
+          };
+          return done(null, user);
+    }
+    else {return done(null, null);} 
   })
 }

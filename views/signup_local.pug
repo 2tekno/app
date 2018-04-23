@@ -1,0 +1,65 @@
+include layouts/header
+
+.container.page-data(style={'margin-top':'70px', 'margin-bottom': '70px'})
+	
+	form(method='POST' id ='signup_local' name ='signup_local' action='/signup_local' enctype='multipart/urlencoded')
+		
+		.row
+			.col-sm-6.mx-auto
+
+				.editAdSection  
+					h3 Create Account
+					.editAdFieldSet
+						label(for='UserName') User Name
+						input.form-control(type='text' id='UserName' name='UserName')               
+					.editAdFieldSet
+						label(for='Password') Password
+						input.form-control(type='password' id='Password'  name='Password')
+					.editAdFieldSet
+						label(for='Password') Confirm Password
+						input.form-control(type='password' id='ConfirmPassword'  name='ConfirmPassword')
+					button.btn.btn-primary.pull-right(type='submit' id='submit') Create Account 
+
+					if (message.length > 0)
+						#alert
+							p= message
+
+
+script(type='text/javascript').
+
+	$(document).ready(function() {
+
+		var checkForm = function(e) {
+			if(this.UserName.value == "") {
+				alert("Error: Username cannot be blank!");
+				this.UserName.focus();
+				e.preventDefault(); // equivalent to return false
+				return;
+			}
+			re = /^\w+$/;
+			if(!re.test(this.UserName.value)) {
+				alert("Error: Username must contain only letters, numbers and underscores!");
+				this.username.focus();
+				e.preventDefault();
+				return;
+			}
+			if(this.Password.value != "" && this.Password.value == this.ConfirmPassword.value) {
+				if(!checkPassword(this.Password.value)) {
+				alert("The password you have entered is not valid!");
+				this.Password.focus();
+				e.preventDefault();
+				return;
+				}
+			} else {
+				alert("Error: Please check that you've entered and confirmed your password!");
+				this.Password.focus();
+				e.preventDefault();
+				return;
+			}
+			alert("Both username and password are VALID!");
+		};
+
+		var myForm = document.getElementById("signup_local");
+		myForm.addEventListener("submit", checkForm, true);
+
+	});								

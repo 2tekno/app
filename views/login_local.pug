@@ -1,0 +1,25 @@
+include layouts/header
+
+.container.page-data(style={'margin-top':'70px', 'margin-bottom': '70px'})
+	form(method='POST' action='/login_local' enctype='multipart/urlencoded')
+		
+		.row
+			.col-sm-6.mx-auto
+
+				.editAdSection  
+					h3 Login
+					.editAdFieldSet
+						label(for='UserName') User Name
+						input.form-control(type='text' id='UserName' name='UserName')               
+					.editAdFieldSet
+						label(for='Password') Password
+						input.form-control(type='password' id='Password'  name='Password')
+					
+					button.btn.btn-primary.pull-right(type='submit' id='submit') Login 
+
+				a(href='/signup_local') Or create account
+
+					if (message.length > 0)
+						#alert
+							p= message
+			

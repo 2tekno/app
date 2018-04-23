@@ -133,29 +133,47 @@ module.exports = function(app, passport) {
  // LOGIN ===============================
     // show the login form
     app.get('/login', function(req, res) {
-		//if (req.isAuthenticated()) {showLogin = false;}
-		// render the page and pass in any flash data if it exists
 		res.render('login', { message: req.flash('loginMessage'), user : req.user });
 	});
-    
-   /*    app.post('/login', passport.authenticate('local-login', {
-            //successRedirect : '/profile', // redirect to the secure profile section
-            failureRedirect : '/login', // redirect back to the signup page if there is an error
+	
+
+
+	
+    app.get('/login_local', function(req, res) {
+		res.render('login_local', { message: req.flash('loginMessage'), user : req.user });
+	});
+
+    app.post('/login_local', passport.authenticate('local-login', {
+		successReturnToOrRedirect : '/profile', // redirect to the secure profile section
+            failureRedirect : '/login_local', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }),
         function(req, res) {
-            if (req.body.remember) {
-              req.session.cookie.maxAge = 365*5;
-            } else {
-              req.session.cookie.expires = false;
-            }
-         res.redirect(req.session.returnTo || '/');
-         delete req.session.returnTo;
+			res.redirect(req.session.returnTo || '/');
+			delete req.session.returnTo;
     });
-*/
 	
-	
-	
+	app.post('/signup_local', passport.authenticate('local-signup', {
+			successReturnToOrRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/signup_local', // redirect back to the signup page if there is an error
+			failureFlash : true // allow flash messages
+		})
+	);	
+
+	app.get('/signup_local', function(req, res) {
+		res.render('signup_local', { message: req.flash('signupMessage') });
+	});
+	// process the signup form
+	app.post('/signup_local', 
+		passport.authenticate('local-signup', {
+			successReturnToOrRedirect : '/profile', // redirect to the secure profile section
+			failureRedirect : '/signup_local', // redirect back to the signup page if there is an error
+			failureFlash : true // allow flash messages
+		})
+	);	
+
+
+
 	
 	app.get('/logout', function (req, res){
 		
@@ -220,9 +238,7 @@ module.exports = function(app, passport) {
 // route middleware to make sure
 function isLoggedIn(req, res, next) {
 
-	// if user is authenticated in the session, carry on
 	if (req.user) {
-		//console.log('user ==' + req.user);
 		return next();
 	}
     else { 
