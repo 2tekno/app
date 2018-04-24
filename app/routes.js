@@ -132,9 +132,9 @@ module.exports = function(app, passport) {
     
  // LOGIN ===============================
     // show the login form
-    app.get('/login', function(req, res) {
-		res.render('login', { message: req.flash('loginMessage'), user : req.user });
-	});
+    // app.get('/login', function(req, res) {
+	// 	res.render('login', { message: req.flash('loginMessage'), user : req.user });
+	// });
 	
 
 
@@ -243,7 +243,7 @@ function isLoggedIn(req, res, next) {
 	}
     else { 
         req.session.returnTo = req.path; 
-        res.redirect('/login'); 
+        res.redirect('/login_local'); 
     }
 
 }
