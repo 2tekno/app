@@ -26,7 +26,7 @@ module.exports = function(app, passport) {
     app.get('/upload', isLoggedIn, function(req, res){		
 
         var userID = req.user.UserID || 0;
-        res.render('new_post', {userID: userID, 
+        res.render('add_item', {userID: userID, 
 								user: req.user,
 								ListLocations: dbconfig.ListLocations, 
 								ListTypes: dbconfig.ListTypes,
