@@ -1,16 +1,17 @@
 include layouts/header
-include mixins/_myitem
+include mixins/myitem
 
 .container-fluid(style={'margin-top':'100px', 'margin-bottom': '70px'})
 	
-	//- .row.well
-	//- 	.col-sm-12
-	.grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 150 }')
+	//- .grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 150 }')
+	//- 	if (mylistingData)
+	//- 			each item in mylistingData
+	//- 				+myitem(item)
+
+	.row
 		if (mylistingData)
-				each item in mylistingData
-					+myitem(item)
-
-
+			each item in mylistingData
+				+myitem( item )
 									
 script(type='text/javascript').
 
@@ -18,7 +19,7 @@ script(type='text/javascript').
 	
 		var itemID;
 						
-		$("body").on("click", ".myitem", function() {
+		$("body").on("click", ".box", function() {
 			itemID = $(this).attr('id');	
 			var url = '/postings/edit/' + itemID; 			
 			window.location.href = url;

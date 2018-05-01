@@ -1,0 +1,9 @@
+mixin myitem(obj)
+
+	.col-md-2.box.card(id = `${obj.PostingID}` onmouseover="" style={'cursor': 'pointer','margin-top':'5px', 'margin-bottom': '5px','min-width': '200px'})
+		p.pull-right #{obj.Type}			
+		img.card-img-top(src="/uploads/" + `${obj.FileName}`  data-rotate=`${obj.Angle}`)
+		.card-body
+			h3.card-title #{obj.Title}
+			p.card-text #{obj.PostingText}
+			p.card-text.fa.fa-dollar #{obj.Price}

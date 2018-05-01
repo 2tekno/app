@@ -6,17 +6,11 @@ body {
   height:auto;
 }
 
-.card-deck .card {
-    max-width: calc(25% - 30px);
+.grid-sizer,
+.grid-item {
+  width: 20%;
 }
 
-/* .single-card-wrap {
-    position: relative;
-    border: solid 1px #777;
-    overflow: hidden;
-    width: 100%;
-    max-width: 100%;
-} */
 
 *{
 

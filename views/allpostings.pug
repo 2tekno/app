@@ -1,18 +1,18 @@
 include layouts/header
-include mixins/_post
+include mixins/post
 
 
 
 .container-fluid(style={'margin-top':'80px', 'margin-bottom': '70px'})
-	//- .row
-	//- 	if (data)
-	//- 		each item in data
-	//- 			+post( item )
-		
-	.grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 150 }')
+	.row
 		if (data)
 			each item in data
 				+post( item )
+		
+	//- .grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": ".grid-item", "percentPosition": "true"}')
+	//- 	if (data)
+	//- 		each item in data
+	//- 			+post( item )
 
 script(type='text/javascript').
 
