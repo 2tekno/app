@@ -18,7 +18,7 @@ script(type='text/javascript').
 
 	$(document).ready(function() {
 
-		$("body").on("click", ".box", function() {
+		$("body").on("click", ".card", function() {
 			var postingID = $(this).attr('id');			
 			var url = '/postingsByPostingID/' + postingID;  
 			window.location.href = url;
@@ -33,16 +33,16 @@ script(type='text/javascript').
 		//- });
 
 
-		//- $('img.card-img-top.img-fluid').each(function() {
-		//- 	var deg = $(this).data('rotate') || 0;
-		//- 	var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
-		//- 	$(this).css({ 
-		//- 		'-webkit-transform': rotate,
-		//- 		'-moz-transform': rotate,
-		//- 		'-o-transform': rotate,
-		//- 		'-ms-transform': rotate,
-		//- 		'transform': rotate 
-		//- 	});
-		//- });
+		$('img.card-img-top').each(function() {
+			var deg = $(this).data('rotate') || 0;
+			var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
+			$(this).css({ 
+				'-webkit-transform': rotate,
+				'-moz-transform': rotate,
+				'-o-transform': rotate,
+				'-ms-transform': rotate,
+				'transform': rotate 
+			});
+		});
 
 	});

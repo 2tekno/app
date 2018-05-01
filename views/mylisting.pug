@@ -21,7 +21,7 @@ script(type='text/javascript').
 	
 		var itemID;
 						
-		$("body").on("click", ".box", function() {
+		$("body").on("click", ".card", function() {
 			itemID = $(this).attr('id');	
 			var url = '/postings/edit/' + itemID; 			
 			window.location.href = url;
