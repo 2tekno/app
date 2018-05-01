@@ -2,17 +2,12 @@ include layouts/header
 include mixins/post
 
 
-
 .container-fluid(style={'margin-top':'80px', 'margin-bottom': '70px'})
 	.row
 		if (data)
 			each item in data
 				+post( item )
 		
-	//- .grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": ".grid-item", "percentPosition": "true"}')
-	//- 	if (data)
-	//- 		each item in data
-	//- 			+post( item )
 
 script(type='text/javascript').
 
@@ -33,7 +28,7 @@ script(type='text/javascript').
 		//- });
 
 
-		$('img.center-block').each(function() {
+		$('img.card-img-top').each(function() {
 			var deg = $(this).data('rotate') || 0;
 			var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
 			$(this).css({ 
