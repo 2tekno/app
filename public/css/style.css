@@ -6,11 +6,11 @@ body {
   height:auto;
 }
 
-.card-img-top {
-    min-width: 100%;
+/* .card-img-top {
+    width: 90%;
 
-    height: auto;
-    }
+    object-fit: cover;
+    } */
 
 .card-header{
     padding-bottom: 0px;
