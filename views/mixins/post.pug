@@ -1,10 +1,15 @@
 mixin post(obj)
 
-	.col-md-2.box.card(id = `${obj.PostingID}` onmouseover=""  style={'cursor': 'pointer','margin-top':'5px', 'margin-bottom': '5px','min-width': '200px'})
-		p.pull-right #{obj.Type}
+	.card(id = `${obj.PostingID}` onmouseover=""  style={'cursor': 'pointer'})
+		.card-header
+			p.pull-right #{obj.Type}
+
 		img.card-img-top(src="/uploads/" + `${obj.FileName}`  data-rotate=`${obj.Angle}`)
+
 		.card-body
 			h3.card-title #{obj.Title.substring(0,50)}	
-			p.card-text #{obj.PostingText.substring(0,100)}
-			p.card-text.fa.fa-dollar #{obj.Price}
+			p.card-subtitle #{obj.PostingText.substring(0,100)}
+		.card-footer
+			p.fa.fa-dollar #{obj.Price}
+
 	

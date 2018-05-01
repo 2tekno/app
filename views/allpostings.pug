@@ -3,11 +3,16 @@ include mixins/post
 
 
 .container-fluid(style={'margin-top':'80px', 'margin-bottom': '70px'})
-	.row
+	//- .row
+	//- 	if (data)
+	//- 		.card-group
+	//- 			each item in data
+	//- 				+post( item )
+
+	.card-columns
 		if (data)
 			each item in data
 				+post( item )
-		
 
 script(type='text/javascript').
 
@@ -28,16 +33,16 @@ script(type='text/javascript').
 		//- });
 
 
-		$('img.card-img-top').each(function() {
-			var deg = $(this).data('rotate') || 0;
-			var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
-			$(this).css({ 
-				'-webkit-transform': rotate,
-				'-moz-transform': rotate,
-				'-o-transform': rotate,
-				'-ms-transform': rotate,
-				'transform': rotate 
-			});
-		});
+		//- $('img.card-img-top.img-fluid').each(function() {
+		//- 	var deg = $(this).data('rotate') || 0;
+		//- 	var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
+		//- 	$(this).css({ 
+		//- 		'-webkit-transform': rotate,
+		//- 		'-moz-transform': rotate,
+		//- 		'-o-transform': rotate,
+		//- 		'-ms-transform': rotate,
+		//- 		'transform': rotate 
+		//- 	});
+		//- });
 
 	});

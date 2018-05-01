@@ -8,11 +8,13 @@ include mixins/myitem
 	//- 			each item in mylistingData
 	//- 				+myitem(item)
 
-	.row
+
+	.card-columns
 		if (mylistingData)
 			each item in mylistingData
 				+myitem( item )
-									
+
+
 script(type='text/javascript').
 
 	$(document).ready(function() {

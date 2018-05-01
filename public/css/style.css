@@ -6,12 +6,18 @@ body {
   height:auto;
 }
 
-.grid-sizer,
-.grid-item {
-  width: 20%;
+/* .card-img-top {
+    min-width: 100%;
+    width: auto;
+    height: auto;
+    } */
+
+.card-header{
+    padding-bottom: 0px;
+    padding-top: 0px;
 }
 
-
+    
 *{
 
     border-radius:0px;
