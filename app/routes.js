@@ -28,9 +28,10 @@ module.exports = function(app, passport) {
 								user: req.user,
 								ListLocations: dbconfig.ListLocations, 
 								ListTypes: dbconfig.ListTypes,	
-								ListCategories: req.categories
+								ListCategories: dbconfig.ListCategories
 								});
 								// ListCategories: dbconfig.ListCategories, TODO: replace it with DB select ... from category ...
+								//ListCategories: req.categories
     });
     
 	
