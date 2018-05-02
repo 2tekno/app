@@ -64,11 +64,15 @@ module.exports = function(app, passport) {
 
 	app.post('/sendmessage', messages.new_message);
 
-	 app.get('/', function(req, res) {		
+	//  app.get('/', function(req, res) {		
+	//  	res.render('homepage',{page_title: "Home Page", user : req.user}); 
+	//  });
 
-	 	res.render('homepage',{page_title: "Home Page", user : req.user}); 
-	 });
-	
+
+	app.get('/', postings.allpostings);
+
+
+
 	app.get('/search', postings.search);
 
 

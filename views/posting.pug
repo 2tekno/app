@@ -17,12 +17,13 @@ input.form-control(type='hidden' id="idxuserid" name='idxuserid' value=userID)
 			p.pull-right #{posting.Location}
 		
 	.row
-		.col-sm-12.well
+		.col-sm-12
 			each image in images
 				img.galleryImage(src="/uploads/" + `${image.FileName}` data-rotate=`${image.Angle}`)
 
-	//- .col-sm-12
-	button.btn.btn-warning.btn-lg.pull-right(type='submit' id='contactSeller') Contact Seller 
+	.row
+		.col-sm-12
+			button.btn.btn-warning.btn-lg.pull-right(type='submit' id='contactSeller') Contact Seller 
 
 
 	.div(id="divDialog") 
