@@ -39,6 +39,9 @@ module.exports = function(app, passport) {
 
 		res.render('edit_item', {
 			itemData: req.itemData,
+			ListLocations: dbconfig.ListLocations, 
+			ListTypes: dbconfig.ListTypes,	
+			ListCategories: dbconfig.ListCategories,
 			user : req.user
 		});
 	});
