@@ -17,11 +17,11 @@ mixin itembody
     .form-group.form-row.col-sm-9
         select.chosen-select(style={width: '100%'} id='category' name='category[]' data-placeholder='Select Category' multiple tabindex='4')
             if (itemData)
-                each item in itemData.ListCategories
-                    option(selected=((itemData) ? itemData.Category.indexOf(item) != -1 : NULL)) #{item}
+                each item in ListCategories
+                    option(selected=((itemData) ? itemData.Category.indexOf(item.CategoryDescription) != -1 : NULL)) #{item.CategoryDescription}
             else
                 each item in ListCategories
-                    option #{item}
+                    option #{item.CategoryDescription}
 
 
     .form-group.form-row.col-sm-9

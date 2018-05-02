@@ -3,8 +3,6 @@ var categories = require('./categories');
 var properties = require('./properties');
 var path = require('path');
 var fs = require('fs');
-
-//var users = require('./users');
 var mysql = require('mysql');
 var dbconfig = require('../config/database');
 var connection = mysql.createConnection(dbconfig.connection);
@@ -23,15 +21,16 @@ module.exports = function(app, passport) {
 
 	app.post('/edit_item/:id', postings.edit_item);	
     app.post('/upload', postings.upload);	
-    app.get('/upload', isLoggedIn, function(req, res){		
+    app.get('/upload', isLoggedIn, categories.getAllCategories, function(req, res){		
 
         var userID = req.user.UserID || 0;
         res.render('add_item', {userID: userID, 
 								user: req.user,
 								ListLocations: dbconfig.ListLocations, 
-								ListTypes: dbconfig.ListTypes,
-								ListCategories: dbconfig.ListCategories		// TODO: replace it with DB select ... from category ...
+								ListTypes: dbconfig.ListTypes,	
+								ListCategories: req.categories
 								});
+								// ListCategories: dbconfig.ListCategories, TODO: replace it with DB select ... from category ...
     });
     
 	
