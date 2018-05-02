@@ -21,7 +21,7 @@ module.exports = function(app, passport) {
 
 	app.post('/edit_item/:id', postings.edit_item);	
     app.post('/upload', postings.upload);	
-    app.get('/upload', isLoggedIn, categories.getAllCategories, function(req, res){		
+    app.get('/upload', isLoggedIn,  function(req, res){		
 
         var userID = req.user.UserID || 0;
         res.render('add_item', {userID: userID, 
