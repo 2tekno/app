@@ -36,13 +36,13 @@ module.exports = function(app, passport) {
     });
     
 	
-	app.get('/postings/edit/:id', postings.itemDataByPostingID, isLoggedIn, function(req, res) {
+	app.get('/postings/edit/:id', isLoggedIn, postings.itemDataByPostingID, categories.getAllCategories, function(req, res) {
 
 		res.render('edit_item', {
 			itemData: req.itemData,
 			ListLocations: dbconfig.ListLocations, 
 			ListTypes: dbconfig.ListTypes,	
-			ListCategories: dbconfig.ListCategories,
+			ListCategories: req.categories,
 			user : req.user
 		});
 	});
