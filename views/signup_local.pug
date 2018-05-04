@@ -62,4 +62,8 @@ script(type='text/javascript').
 		var myForm = document.getElementById("signup_local");
 		myForm.addEventListener("submit", checkForm, true);
 
+		function checkPassword(str){
+			var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+			return re.test(str);
+		  }
 	});								
