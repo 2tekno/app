@@ -132,7 +132,18 @@ exports.postingsByPostingID = function(req, res){
 	if (req.user)
 		userID = req.user.UserID || 0;
 	
-    var PostingID = req.params.id || 0;
+	var PostingID = req.params.id || 0;
+	
+
+	var click = { 
+		PostingID : PostingID,
+		UserCreatedID : userID
+	};
+	
+	connection.query("INSERT INTO postingclicks set ? ", click, function(err, rows) {
+		if (err) console.log("Error inserting : %s ", err);
+	});
+
      connection.query('SELECT * FROM posting WHERE PostingID = ?', PostingID, function(err, posting) {
          if(err) console.log("Error Selecting : %s ", err);
 		
@@ -492,7 +503,9 @@ exports.edit_item = function(req, res){
 
 
 exports.itemDataByPostingID = function(req, res, next){
-    var PostingID = req.params.id || 0;
+	var PostingID = req.params.id || 0;
+
+	
      connection.query('SELECT *,if(Category is null,"",Category) AS Cat FROM posting WHERE PostingID = ?', PostingID, function(err, posting) {
          if(err) console.log("Error Selecting : %s ", err);
 		
