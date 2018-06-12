@@ -68,14 +68,7 @@ module.exports = function(app, passport) {
 
 	app.post('/sendmessage', messages.new_message);
 
-	//  app.get('/', function(req, res) {		
-	//  	res.render('homepage',{page_title: "Home Page", user : req.user}); 
-	//  });
-
-
 	app.get('/', postings.allpostings);
-
-
 
 	app.get('/search', postings.search);
 
@@ -125,27 +118,14 @@ module.exports = function(app, passport) {
 	// =====================================
 
 	app.get('/profile', isLoggedIn, messages.myInBoxMessages, messages.myOutBoxMessages, postings.mylistingData,  function(req, res) {
-		//if (req.isAuthenticated()) {showLogin = false;}
-		//console.log('req.user **** ' + JSON.stringify(req.user));
-		
 		res.render('profile', {
 			inbox: req.inbox,
 			outbox: req.outbox,
 			mylistingData: req.mylistingData,
-			//showLogin: showLogin,
 			user : req.user  // get the user out of session and pass to template
-
 		});
 	});  
     
- // LOGIN ===============================
-    // show the login form
-    // app.get('/login', function(req, res) {
-	// 	res.render('login', { message: req.flash('loginMessage'), user : req.user });
-	// });
-	
-
-
 	
     app.get('/login_local', function(req, res) {
 		res.render('login_local', { message: req.flash('loginMessage'), user : req.user });
@@ -161,12 +141,13 @@ module.exports = function(app, passport) {
 			delete req.session.returnTo;
     });
 	
-	app.post('/signup_local', passport.authenticate('local-signup', {
-			successReturnToOrRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/signup_local', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
-		})
-	);	
+	// app.post('/signup_local', 
+	// 		passport.authenticate('local-signup', {
+	// 		successReturnToOrRedirect : '/profile', // redirect to the secure profile section
+	// 		failureRedirect : '/signup_local', // redirect back to the signup page if there is an error
+	// 		failureFlash : true // allow flash messages
+	// 	})
+	// );	
 
 	app.get('/signup_local', function(req, res) {
 		res.render('signup_local', { message: req.flash('signupMessage') });
@@ -181,15 +162,11 @@ module.exports = function(app, passport) {
 	);	
 
 
-
 	
 	app.get('/logout', function (req, res){
-		
-		//showLogin = true;
 		req.logout();
 		res.clearCookie('connect.sid');
 		res.render('layouts/header', {user: req.user});
-				
 	});
 
 
@@ -211,12 +188,11 @@ module.exports = function(app, passport) {
 	);
     
 	// process with Google ....
-
+	// signup with Goggle
    	app.get('/auth/google', function(req, res, next) {
 		passport.authenticate('google', {scope: ['profile', 'email']})(req, res, next);		
 	});
 
-	
     // the callback after google has authenticated the user
     app.get('/oauth2callback',
 		passport.authenticate('google', {
@@ -228,10 +204,8 @@ module.exports = function(app, passport) {
 	
 	// process with Facebook ....
 
+	// signup with FB
 	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-	//app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['profile', 'email']}));			
-
-	
 	
 	app.get('/auth/facebook/callback',
 	  passport.authenticate('facebook', { successRedirect : '/profile', failureRedirect: '/' }),
@@ -245,7 +219,6 @@ module.exports = function(app, passport) {
 
 // route middleware to make sure
 function isLoggedIn(req, res, next) {
-
 	if (req.user) {
 		return next();
 	}
@@ -253,7 +226,6 @@ function isLoggedIn(req, res, next) {
         req.session.returnTo = req.path; 
         res.redirect('/login_local'); 
     }
-
 }
 
 

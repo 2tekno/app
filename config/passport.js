@@ -43,43 +43,6 @@ module.exports = function(passport) {
 	
 	
     // =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
-
-    // passport.use(
-    //     'local-signup',
-    //     new LocalStrategy({
-	// 			usernameField : 'username',
-	// 			passwordField : 'password',
-	// 			passReqToCallback : true // allows us to pass back the entire request to the callback
-	// 		},
-	// 		function(req, username, password, done) {		
-	// 			 users.getUserByEmail(username, function(err, rows) {
-	// 			    if(err) {
-	// 					return done(err);
-	// 			    }
-	// 				if (rows.length) {
-	// 					return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
-	// 				} else {
-	// 					var newUserMysql = {
-	// 						UserName: username,
-	// 						Email: username,
-	// 						Password: bcrypt.hashSync(password, null, null)  // use the generateHash function in our user model
-	// 					};
-	// 					users.create(newUserMysql.UserName, newUserMysql.Email, newUserMysql.Password, function(err, rows) {
-	// 						newUserMysql.id = rows.insertId;
-	// 						return done(null, newUserMysql);
-	// 					});
-	// 				}
-	// 			});
-	// 		}
-	// 	)
-    // );
-
-
-    // =========================================================================
     // LOCAL LOGIN =============================================================
     // =========================================================================
     // we are using named strategies since we have one for login and one for signup
@@ -94,8 +57,6 @@ module.exports = function(passport) {
 					if (user) {
 						console.log('local-login: User found.');	
 						req.user = user; 
-						// if (Password.trim() === user.Password.trim())
-						// 	return done(null, user);
 						var userPsw = bcrypt.hashSync(Password.trim(), null, null);
 						if (bcrypt.compareSync(Password.trim(),user.Password.trim()))
 							return done(null, user);
@@ -117,7 +78,6 @@ module.exports = function(passport) {
 					console.log('local-signup.');	
 					if(err) {return done(err);}
 					if (user) {
-
 						return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
 					} else {
 						var newUserMysql = {
@@ -144,30 +104,26 @@ module.exports = function(passport) {
 				  passReqToCallback: true
 			},
 		  function(req, accessToken, refreshToken, profile, done) {
-				
+		console.log('here ...');				
+		console.log('google profile email: ' + profile.emails[0].value);
 				var ip = req.headers['x-forwarded-for'] || 
 							 req.connection.remoteAddress || 
 							 req.socket.remoteAddress ||
 							 req.connection.socket.remoteAddress;
 				
-				
-				users.getUserByEmail(profile.emails[0].value, function(err, rows) {
+				users.getUserByUserName(profile.emails[0].value,'', function(err, rows) {
 					if(err) {return done(err);}
 					if (rows.length) {
 						console.log('This user already exists.');
-
 						var user = {
 							UserName: rows[0].UserName,
 							Email: rows[0].Email,
 							UserID : rows[0].UserID
 						};
-						
 						req.user = user;  //refresh the session value
-
 						return done(null, user);
-												
 					} else {
-						users.createUser(ip, profile.emails[0].value, profile.emails[0].value, function(err, user) {
+						users.createUserGoogle(ip, profile.emails[0].value, profile.emails[0].value,'', function(err, user) {
 							return done(null, user);
 						});
 					}
