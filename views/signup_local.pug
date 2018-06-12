@@ -20,6 +20,16 @@ include layouts/header
 						input.form-control(type='password' id='ConfirmPassword'  name='ConfirmPassword' placeholder='confirm password')
 						button.btn.btn-primary.pull-right(type='submit' id='submit') Create Account 
 
+
+				.editAdSection  
+					h3 Or signup by
+					br
+					a(href="/auth/facebook") Facebook
+					br
+					br
+					a(href="/auth/google") Google
+
+
 					if (message.length > 0)
 						#alert
 							p= message
