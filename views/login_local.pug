@@ -8,17 +8,28 @@ include layouts/header
 
 				.editAdSection  
 					h3 Login
-					.editAdFieldSet
-						//- label(for='UserName') User Name
-						input.form-control(type='text' id='UserName' name='UserName' placeholder='username / email')               
 
-						//- label(for='Password') Password
-						input.form-control(type='password' id='Password'  name='Password' placeholder='password')
-					
-						button.btn.btn-primary.pull-right(type='submit' id='submit') Login 
+				.editAdSection  
+					br
+					br
+					a(href="/auth/facebook") Facebook
+					br
+					br
+					a(href="/auth/google") Google	
+					br
+					br
 
-				a(href='/signup_local') Or create account
+				.editAdFieldSet
+					input.form-control(type='text' id='UserName' name='UserName' placeholder='username / email')               
+					input.form-control(type='password' id='Password'  name='Password' placeholder='password')
+					button.btn.btn-primary.pull-right(type='submit' id='submit') Login 
 
+								
+				.editAdSection
+					br
+					br
+					a(href='/signup_local') Or create account
+					br
 					if (message.length > 0)
 						#alert
 							p= message

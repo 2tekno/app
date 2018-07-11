@@ -42,34 +42,16 @@ exports.create = function(UserName, Email, Password, done) {
 	 })
 }
 
-exports.createUserGoogle = function(ip, UserName, Email, Password, done) {
-    console.log('createUser');	
-    var user = {
-      UserName 	: UserName,
-      Password 	: Password,
-      Email 		: Email,
-      IpAddress	: ip
-    };
 
-  // var insertQuery = "INSERT INTO users set ? ";
-  // connection.query(insertQuery, [user], function(err, result) {
-  //   if (err) return done(err)
-  //   else {
-  //     console.log('result.insertId  === ' + result.insertId);
-  //     user.UserID = result.insertId;
-  //     console.log('user  === ' + JSON.stringify(user));
-  //     done(null, user);
-  //   }
-  // })
-}
 
-exports.createUser = function(ip, UserName, Email, Password, done) {
+exports.createUser = function(ip, UserName, Email, Password, AccountType, done) {
       console.log('createUser');	
       var user = {
         UserName 	: UserName,
         Password 	: Password,
         Email 		: Email,
-        IpAddress	: ip
+        IpAddress	: ip,
+        AccountType: AccountType
       };
 		var insertQuery = "INSERT INTO users set ? ";
 		connection.query(insertQuery, [user], function(err, result) {

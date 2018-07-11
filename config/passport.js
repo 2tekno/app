@@ -50,7 +50,11 @@ module.exports = function(passport) {
 
     passport.use(
         'local-login',
-        new LocalStrategy({usernameField : 'UserName',passwordField : 'Password',passReqToCallback : true}, function(req, UserName, Password, done) { 
+		new LocalStrategy({
+				usernameField : 'UserName',
+				passwordField : 'Password',
+				passReqToCallback : true}, 
+			function(req, UserName, Password, done) { 
 			console.log('local-login');	
 			users.getUserByUserName(UserName, Password, function(err, user) {
 					if(err) {return done(err);}
@@ -73,7 +77,7 @@ module.exports = function(passport) {
 	
 	passport.use(
         'local-signup',
-        new LocalStrategy({usernameField : 'UserName',passwordField : 'Password',passReqToCallback : true}, function(req, UserName, Password, done) { 	
+        new LocalStrategy({usernameField: 'UserName',passwordField: 'Password',passReqToCallback: true}, function(req, UserName, Password, done) { 	
 				 users.getUserByUserName(UserName, Password, function(err, user) {
 					console.log('local-signup.');	
 					if(err) {return done(err);}
@@ -86,7 +90,8 @@ module.exports = function(passport) {
 							Password: bcrypt.hashSync(Password, null, null)  // use the generateHash function in our user model
 						};
 						var ipAddress = 0;
-						users.createUser(ipAddress, newUserMysql.UserName, newUserMysql.Email, newUserMysql.Password, function(err, user) {
+						var AccountType = 'local';
+						users.createUser(ipAddress, newUserMysql.UserName, newUserMysql.Email, newUserMysql.Password, AccountType, function(err, user) {
 							//newUserMysql.id = user.UserID;
 							req.user = user; 
 							return done(null, user);
@@ -104,30 +109,28 @@ module.exports = function(passport) {
 				  passReqToCallback: true
 			},
 		  function(req, accessToken, refreshToken, profile, done) {
-		console.log('here ...');				
-		console.log('google profile email: ' + profile.emails[0].value);
+			
+				console.log('google profile email: ' + profile.emails[0].value);
 				var ip = req.headers['x-forwarded-for'] || 
-							 req.connection.remoteAddress || 
-							 req.socket.remoteAddress ||
-							 req.connection.socket.remoteAddress;
-				
-				users.getUserByUserName(profile.emails[0].value,'', function(err, rows) {
+							req.connection.remoteAddress || 
+							req.socket.remoteAddress ||
+							req.connection.socket.remoteAddress;
+						
+				users.getUserByEmail(profile.emails[0].value, function(err, user) {
 					if(err) {return done(err);}
-					if (rows.length) {
-						console.log('This user already exists.');
-						var user = {
-							UserName: rows[0].UserName,
-							Email: rows[0].Email,
-							UserID : rows[0].UserID
-						};
-						req.user = user;  //refresh the session value
+				
+					if (user) {
+						console.log('google signup == That username already exists.');
+						//return done(null, false, req.flash('signupMessage', 'That username already exists.'));
 						return done(null, user);
 					} else {
-						users.createUserGoogle(ip, profile.emails[0].value, profile.emails[0].value,'', function(err, user) {
+						var AccountType = 'google';
+						users.createUser(ip, profile.emails[0].value, profile.emails[0].value,'',AccountType, function(err, user) {
 							return done(null, user);
 						});
 					}
-				});		   
+			
+				});
 			   
 		  }
 	));
@@ -143,30 +146,28 @@ module.exports = function(passport) {
 		},
 		function(req,accessToken, refreshToken, profile, done) {
 			console.log('req ' + req);
-			   //var ip ='';
-				var ip = req.headers['x-forwarded-for'] || 
-							 req.connection.remoteAddress || 
-							 req.socket.remoteAddress ||
-							 req.connection.socket.remoteAddress;
-				
-				users.getUserByEmail(profile.emails[0].value, function(err, rows) {
-					if(err) {return done(err);}
-					if (rows.length) {
-						console.log('This user already exists.');
+			var ip = req.headers['x-forwarded-for'] || 
+							req.connection.remoteAddress || 
+							req.socket.remoteAddress ||
+							req.connection.socket.remoteAddress;
+			
+			console.log('ip == ' + ip);
 
-						var user = {
-							UserName: rows[0].UserName,
-							Email: rows[0].Email,
-							UserID : rows[0].UserID
-						};
-												
+			users.getUserByEmail(profile.emails[0].value, function(err, user) {
+				if(err) {return done(err);}
+			
+				if (user) {
+					console.log('fb signup == That username already exists.');
+					//return done(null, false, req.flash('signupMessage', 'That username already exists.'));
+					return done(null, user);
+				} else {
+					var AccountType = 'fb';
+					users.createUser(ip, profile.emails[0].value, profile.emails[0].value,'',AccountType, function(err, user) {
 						return done(null, user);
-					} else {
-						users.createUser(ip, profile.emails[0].value, profile.emails[0].value, function(err, user) {
-							return done(null, user);
-						});
-					}
-				});		
+					});
+				}
+		
+			});		
 			
 		}
 	));

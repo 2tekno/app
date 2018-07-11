@@ -6,11 +6,8 @@ var fs = require('fs');
 var mysql = require('mysql');
 var dbconfig = require('../config/database');
 var connection = mysql.createConnection(dbconfig.connection);
-
 var messages = require('./messages');
 var users = require('../models/user');
-
-//var showLogin = true;
 
 
 
@@ -31,8 +28,6 @@ module.exports = function(app, passport) {
 								ListTypes: dbconfig.ListTypes,	
 								ListCategories: req.categories
 								});
-								// ListCategories: dbconfig.ListCategories, TODO: replace it with DB select ... from category ...
-								//ListCategories: req.categories
     });
     
 	
@@ -141,13 +136,6 @@ module.exports = function(app, passport) {
 			delete req.session.returnTo;
     });
 	
-	// app.post('/signup_local', 
-	// 		passport.authenticate('local-signup', {
-	// 		successReturnToOrRedirect : '/profile', // redirect to the secure profile section
-	// 		failureRedirect : '/signup_local', // redirect back to the signup page if there is an error
-	// 		failureFlash : true // allow flash messages
-	// 	})
-	// );	
 
 	app.get('/signup_local', function(req, res) {
 		res.render('signup_local', { message: req.flash('signupMessage') });
@@ -181,39 +169,39 @@ module.exports = function(app, passport) {
 	// process the signup form
 	app.post('/signup', 
 		passport.authenticate('local-signup', {
-			successRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/signup', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
+			successRedirect : '/profile',
+			failureRedirect : '/signup',
+			failureFlash : true 
 		})
 	);
     
-	// process with Google ....
 	// signup with Goggle
    	app.get('/auth/google', function(req, res, next) {
-		passport.authenticate('google', {scope: ['profile', 'email']})(req, res, next);		
+		passport.authenticate('google', {scope: ['profile', 'email'], prompt: 'select_account'})(req, res, next);		
 	});
 
     // the callback after google has authenticated the user
     app.get('/oauth2callback',
 		passport.authenticate('google', {
 				successRedirect : '/profile',
-				failureRedirect : '/'
+				failureRedirect: '/signup_local',
+				failureFlash : true
 		})
 	);	
 
-	
-	// process with Facebook ....
 
 	// signup with FB
 	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 	
 	app.get('/auth/facebook/callback',
-	  passport.authenticate('facebook', { successRedirect : '/profile', failureRedirect: '/' }),
-			  function(req, res) {
-				res.redirect('/');
-			  }
+	  passport.authenticate('facebook', { 
+			successRedirect : '/profile', 
+			failureRedirect: '/signup_local',
+			failureFlash : true }),
+			  function(req, res) {res.redirect('/'); }
 	);
 	
+
 
 };
 

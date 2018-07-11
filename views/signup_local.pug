@@ -10,24 +10,11 @@ include layouts/header
 				.editAdSection  
 					h3 Create Account
 					.editAdFieldSet
-						//- label(for='UserName') User Name
 						input.form-control(type='text' id='UserName' name='UserName' placeholder='username / email')               
 					.editAdFieldSet
-						//- label(for='Password') Password
 						input.form-control(type='password' id='Password'  name='Password' placeholder='password')
-
-						//- label(for='Password') Confirm Password
 						input.form-control(type='password' id='ConfirmPassword'  name='ConfirmPassword' placeholder='confirm password')
 						button.btn.btn-primary.pull-right(type='submit' id='submit') Create Account 
-
-
-				.editAdSection  
-					h3 Or signup by
-					br
-					a(href="/auth/facebook") Facebook
-					br
-					br
-					a(href="/auth/google") Google
 
 
 					if (message.length > 0)
