@@ -1,12 +1,14 @@
 mixin itemrating
 
-	//- .btn-group-sm.float-right(role="group")
 	.form-group.form-row
 		.col-sm-2
 			.input-group
 				.input-group-btn
 					button.btn.btn-primary.fa.fa-thumbs-up#up(type='button')
 
+		.col-sm-1
+			label#ratingvalue(for='ratingvalue') 0
+		
 		.col-sm-2
 			.input-group
 				.input-group-btn

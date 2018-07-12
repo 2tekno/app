@@ -23,7 +23,7 @@ input.form-control(type='hidden' id="idxuserid" name='idxuserid' value=userID)
 				img.galleryImage(src="/uploads/" + `${image.FileName}` data-rotate=`${image.Angle}`)
 
 	.row
-		.col-sm-12
+		.col-sm-8
 			button.btn.btn-warning.btn-lg.pull-right(type='submit' id='contactSeller') Contact Seller 
 
 
@@ -145,8 +145,9 @@ script(type='text/javascript').
 				encode   : true
 			}).done(function(data) {
 					console.log(data); 
-					document.getElementById('up').innerText = data.RatingPos;
-					document.getElementById('down').innerText = data.RatingNeg;
+					//- document.getElementById('up').innerText = data.RatingPos;
+					//- document.getElementById('down').innerText = data.RatingNeg;
+					document.getElementById('ratingvalue').innerText = Number(data.RatingNeg) + Number(data.RatingPos);
 			});
 		};
 
@@ -161,8 +162,9 @@ script(type='text/javascript').
 					encode   : true
 				}).done(function(data) {
 						console.log(data); 
-						document.getElementById('up').innerText = data.RatingPos;
-						document.getElementById('down').innerText = data.RatingNeg;
+						//- document.getElementById('up').innerText = data.RatingPos;
+						//- document.getElementById('down').innerText = data.RatingNeg;
+						document.getElementById('ratingvalue').innerText = Number(data.RatingNeg) + Number(data.RatingPos);
 				});
 		};
 
