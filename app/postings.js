@@ -8,6 +8,19 @@ var connection;
 
 handleDisconnect();
 
+
+exports.getitemrating = function(req, res){
+	var input = JSON.parse(JSON.stringify(req.body));
+	var postingID = input.postingID;
+	
+	var queryStr = 'select sum(CASE WHEN Rating>0 THEN Rating ELSE 0 END) AS RatingPos,sum(CASE WHEN Rating<0 THEN Rating ELSE 0 END) AS RatingNeg from itemrating WHERE PostingID=' + postingID;
+	
+	connection.query(queryStr, function(err, data) {
+		if (err) console.log(err);
+		res.send(JSON.stringify(data[0]));
+	});
+};
+
 exports.itemrating = function(req, res){
 	var input = JSON.parse(JSON.stringify(req.body));
 
@@ -21,13 +34,15 @@ exports.itemrating = function(req, res){
 		Rating : rateValue
 	};
 	
-	var queryStr = 'SELECT SUM(Rating) AS Rating FROM itemrating WHERE PostingID = ' + postingID;
+	var queryStrX = 'SELECT SUM(Rating) AS Rating FROM itemrating WHERE PostingID=' + postingID;
+	var queryStr = 'select sum(CASE WHEN Rating > 0 THEN Rating ELSE 0 END) AS RatingPos,sum(CASE WHEN Rating < 0 THEN Rating ELSE 0 END) AS RatingNeg from itemrating WHERE PostingID=' + postingID;
+	
 
 	connection.query("INSERT INTO itemrating set ? ", rating, function(err, rows) {
 		if (err) console.log("Error inserting : %s ", err);
 
-		connection.query(queryStr, userID, function(err, data) {
-			if (err) { return next(err); }
+		connection.query(queryStr, function(err, data) {
+			if (err) console.log(err);
 			res.send(JSON.stringify(data[0]));
 		});
 

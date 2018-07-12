@@ -53,11 +53,13 @@ script(type='text/javascript').
 	$(document).ready(function() {
 		var subject,message,postingID,userID;
 
-		$("#up").click({rating: 1}, rate);
-		$("#down").click({rating: -1}, rate);
+		$("#up").click({rating: 1, id: 'up'}, rate);
+		$("#down").click({rating: -1, id: 'down'}, rate);
+
+		getrating();
 
 		userID = $('input[name="idxuserid"]').val();
-		if (userID==0)
+		if (userID==0) 
 			$(':input[type="submit"]').prop('disabled', true);
 	
 		$('img.center-block').each(function() {
@@ -126,6 +128,7 @@ script(type='text/javascript').
 
 		function rate(event) {
 			var ratevalue = event.data.rating;
+			var buttonid = event.data.id;
 			postingID = $('input[name="idxpostid"]').val();
 			userID = $('input[name="idxuserid"]').val();
 			var formData = {
@@ -141,8 +144,27 @@ script(type='text/javascript').
 				dataType : 'json', 
 				encode   : true
 			}).done(function(data) {
-					console.log(data.Rating); 
+					console.log(data); 
+					document.getElementById('up').innerText = data.RatingPos;
+					document.getElementById('down').innerText = data.RatingNeg;
 			});
 		};
+
+		function getrating() {
+				var	postingID = $('input[name="idxpostid"]').val();
+				var formData = {'postingID' : postingID	};
+				$.ajax({
+					type     : 'POST', 
+					url      : '/getitemrating', 
+					data     : formData, 
+					dataType : 'json', 
+					encode   : true
+				}).done(function(data) {
+						console.log(data); 
+						document.getElementById('up').innerText = data.RatingPos;
+						document.getElementById('down').innerText = data.RatingNeg;
+				});
+		};
+
 
 	});

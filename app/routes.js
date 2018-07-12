@@ -17,6 +17,7 @@ module.exports = function(app, passport) {
     // UPLOAD Images ---------------------------------------------------------
 
 	app.post('/itemrating', postings.itemrating);	
+	app.post('/getitemrating', postings.getitemrating);	
 
 	app.post('/edit_item/:id', postings.edit_item);	
     app.post('/upload', postings.upload);	
