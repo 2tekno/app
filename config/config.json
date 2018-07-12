@@ -34,7 +34,7 @@
        "google": {
         "clientID": "198849850127-srvoh1jagi2gjl3g97mhd3fjl5acia39.apps.googleusercontent.com",
         "clientSecret": "Hh654WN3PqUbfWB1o-4DJ4cD",
-        "callbackURL": "http://104.236.160.96/oauth2callback"
+        "callbackURL": "http://www.buyitbc.com/oauth2callback"
       }
   }
 }
