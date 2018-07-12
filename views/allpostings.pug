@@ -2,12 +2,8 @@ include layouts/header
 include mixins/post
 
 
+
 .container-fluid(style={'margin-top':'80px', 'margin-bottom': '70px'})
-	//- .row
-	//- 	if (data)
-	//- 		.card-group
-	//- 			each item in data
-	//- 				+post( item )
 
 	.card-columns
 		if (data)
@@ -25,25 +21,5 @@ script(type='text/javascript').
 			return false;
 		});
 
-		//- $("body").on("click", ".fa-search", function() {
-		//- 	var searchtext = $('input[name="searchtext"]').val();
-		//- 	var url = '/allpostings/' + searchtext;  
-		//- 	window.location.href = url;
-		//- 	return false;
-		//- });
-
-
-		//- $('img.card-img-top').each(function() {
-		//- 	var deg = $(this).data('rotate') || 0;
-		//- 	var rotate = 'rotate(' + $(this).data('rotate') + 'deg)';
-		//- 	$(this).css({ 
-		//- 		'-webkit-transform': rotate,
-		//- 		'-moz-transform': rotate,
-		//- 		'-o-transform': rotate,
-		//- 		'-ms-transform': rotate,
-		//- 		'transform': rotate 
-		//- 	});
-		//- 	//$(this).css('width', '60x');
-		//- });
 
 	});

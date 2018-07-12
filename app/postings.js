@@ -8,6 +8,31 @@ var connection;
 
 handleDisconnect();
 
+exports.itemrating = function(req, res){
+	var input = JSON.parse(JSON.stringify(req.body));
+
+	var postingID = input.postingID;
+	var userID = input.userID;
+	var rateValue = input.rateValue;
+
+	var rating = { 
+		UserCreatedID : userID,
+		PostingID : postingID,
+		Rating : rateValue
+	};
+	
+	var queryStr = 'SELECT SUM(Rating) AS Rating FROM itemrating WHERE PostingID = ' + postingID;
+
+	connection.query("INSERT INTO itemrating set ? ", rating, function(err, rows) {
+		if (err) console.log("Error inserting : %s ", err);
+
+		connection.query(queryStr, userID, function(err, data) {
+			if (err) { return next(err); }
+			res.send(JSON.stringify(data[0]));
+		});
+
+	});
+};
 
 exports.mylistingData = function(req, res, next){
 	var userID = req.user.UserID || 0;
