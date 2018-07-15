@@ -3,6 +3,8 @@ var dbconfig = require('../config/database');
 var dbqueries = require('../sql/queries');
 var fs = require('fs');
 
+var os = require('os');
+var ifaces = os.networkInterfaces();
 
 var connection;
 
@@ -12,6 +14,8 @@ handleDisconnect();
 exports.getitemrating = function(req, res){
 	var input = JSON.parse(JSON.stringify(req.body));
 	var postingID = input.postingID;
+	
+
 	
 	var queryStr = 'select sum(CASE WHEN Rating>0 THEN Rating ELSE 0 END) AS RatingPos,sum(CASE WHEN Rating<0 THEN Rating ELSE 0 END) AS RatingNeg from itemrating WHERE PostingID=' + postingID;
 	
@@ -28,11 +32,44 @@ exports.itemrating = function(req, res){
 	var userID = input.userID;
 	var rateValue = input.rateValue;
 
+	var ip = getIp();
+
+
+
+	// Object.keys(ifaces).forEach(function (ifname) {
+	// 	var alias = 0;
+		
+	// 	ifaces[ifname].forEach(function (iface) {
+	// 		if ('IPv4' !== iface.family || iface.internal !== false) {
+	// 		// skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+	// 		//console.log('not IPv4');
+	// 		return;
+	// 		}
+		
+	// 		if (alias >= 1) {
+	// 		// this single interface has multiple ipv4 addresses
+	// 			console.log(ifname + ':' + alias, iface.address);
+	// 			ip += iface.address + ' ';
+	// 		} else {
+	// 		// this interface has only one ipv4 adress
+	// 			console.log(ifname, iface.address);
+	// 			ip = iface.address;
+	// 		}
+	// 		++alias;
+	// 	});
+	// });
+
+
+
+
+
 	var rating = { 
 		UserCreatedID : userID,
 		PostingID : postingID,
-		Rating : rateValue
+		Rating : rateValue,
+		ip: ip
 	};
+	
 	
 	var queryStrX = 'SELECT SUM(Rating) AS Rating FROM itemrating WHERE PostingID=' + postingID;
 	var queryStr = 'select sum(CASE WHEN Rating > 0 THEN Rating ELSE 0 END) AS RatingPos,sum(CASE WHEN Rating < 0 THEN Rating ELSE 0 END) AS RatingNeg from itemrating WHERE PostingID=' + postingID;
@@ -174,10 +211,12 @@ exports.postingsByPostingID = function(req, res){
 	
 	var PostingID = req.params.id || 0;
 	
+	var ip = getIp();
 
 	var click = { 
 		PostingID : PostingID,
-		UserCreatedID : userID
+		UserCreatedID : userID,
+		ip : ip
 	};
 	
 	connection.query("INSERT INTO postingclicks set ? ", click, function(err, rows) {
@@ -591,3 +630,30 @@ exports.itemDataByPostingID = function(req, res, next){
 		 });
       });
 };
+
+function getIp () {
+	var ip='';
+	Object.keys(ifaces).forEach(function (ifname) {
+		var alias = 0;
+		
+		ifaces[ifname].forEach(function (iface) {
+			if ('IPv4' !== iface.family || iface.internal !== false) {
+			// skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+			//console.log('not IPv4');
+			return;
+			}
+		
+			if (alias >= 1) {
+			// this single interface has multiple ipv4 addresses
+				console.log(ifname + ':' + alias, iface.address);
+				ip += iface.address + ' ';
+			} else {
+			// this interface has only one ipv4 adress
+				console.log(ifname, iface.address);
+				ip = iface.address;
+			}
+			++alias;
+		});
+	});
+	return ip;
+}
