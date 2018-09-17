@@ -15,8 +15,8 @@
         "callbackURL": "http://localhost:4300/auth/facebook/callback"
        },
        "google": {
-        "clientID": "473234648334-6bbqln9ojrptalrt8no03n5t6gq9dr75.apps.googleusercontent.com",
-        "clientSecret": "zyp1K27LJDlX1L0h-zQiwHYW",
+        "clientID": "321113397648-gqusd38v291ssgs6u5pmafbab0vhgqr9.apps.googleusercontent.com",
+        "clientSecret": "sDHRYTniSR_RTgbK2GVyS_Ci",
         "callbackURL": "http://localhost:4300/oauth2callback"
       }
 
@@ -32,8 +32,8 @@
         "callbackURL": "http://104.236.160.96/auth/facebook/callback"
        },
        "google": {
-        "clientID": "473234648334-6bbqln9ojrptalrt8no03n5t6gq9dr75.apps.googleusercontent.com",
-        "clientSecret": "zyp1K27LJDlX1L0h-zQiwHYW",
+        "clientID": "321113397648-gqusd38v291ssgs6u5pmafbab0vhgqr9.apps.googleusercontent.com",
+        "clientSecret": "sDHRYTniSR_RTgbK2GVyS_Ci",
         "callbackURL": "http://www.buyitbc.com/oauth2callback"
       }
   }
