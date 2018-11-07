@@ -13,8 +13,11 @@ var users = require('../models/user');
 
 module.exports = function(app, passport) {
 
+	app.get('/', function(req, res) {
+		res.render('coming_soon');
+	})
 
-    // UPLOAD Images ---------------------------------------------------------
+	// UPLOAD Images ---------------------------------------------------------
 
 	app.post('/itemrating', postings.itemrating);	
 	app.post('/getitemrating', postings.getitemrating);	
@@ -204,7 +207,11 @@ module.exports = function(app, passport) {
 			  function(req, res) {res.redirect('/'); }
 	);
 	
-
+// 	app.get('*', function(req, res){
+// 		res.status(404).render('404_error', {title: "Sorry, page not found"});
+//    });
+	   
+	   
 
 };
 

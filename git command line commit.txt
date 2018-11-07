@@ -3,4 +3,4 @@ git commit -m "notes here"
 git push origin master
 
 ==========================================
-git pull https://github.com/2tekno/tfri
+git pull https://github.com/2tekno/app

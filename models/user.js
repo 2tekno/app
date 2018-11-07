@@ -3,7 +3,7 @@ var dbconfig = require('../config/database');
 var dbqueries = require('../sql/queries');
 var connection;
 
-
+handleDisconnect();
 
 function handleDisconnect() {
   connection = mysql.createConnection(dbconfig.connection); // Recreate the connection, since
@@ -26,7 +26,7 @@ function handleDisconnect() {
   });
 }
 
-handleDisconnect();
+
 
 
 exports.create = function(UserName, Email, Password, done) {
