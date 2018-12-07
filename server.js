@@ -58,20 +58,20 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 
-// require('./app/routes.js')(app, passport); 
+require('./app/routes.js')(app, passport); 
 
 
-// app.get('*', function(req, res){
-//  res.status(404).render('404_error', {title: "Sorry, page not found"});
-// });
+app.get('*', function(req, res){
+ res.status(404).render('404_error', {title: "Sorry, page not found"});
+});
 
 
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
   //console.log(process.env);
-  app.get('/', function(req, res) {
-		res.render('coming_soon');
-	})
+  // app.get('/', function(req, res) {
+	// 	res.render('coming_soon');
+	// })
 
 });

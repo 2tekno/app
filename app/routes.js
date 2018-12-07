@@ -13,9 +13,9 @@ var users = require('../models/user');
 
 module.exports = function(app, passport) {
 
-	app.get('/', function(req, res) {
-		res.render('coming_soon');
-	})
+	// app.get('/', function(req, res) {
+	// 	res.render('coming_soon');
+	// })
 
 	// UPLOAD Images ---------------------------------------------------------
 
